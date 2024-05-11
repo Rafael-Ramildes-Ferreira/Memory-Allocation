@@ -4,8 +4,8 @@
 #include <cstdint>
 
 /**
- * @brief Holds information on a memory slots so the MMU can decide
- * on which one to allocate
+ * @brief Holds information on a memory slots so the MMU can decide on which one
+ * to allocate
 */
 class MemorySlot
 {
