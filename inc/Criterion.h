@@ -12,5 +12,23 @@ public:
 	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head);
 };
 
+/**
+ * @brief Best fit criterion implementation class
+*/
+class BestFit
+{
+public:
+	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head);
+};
+
+/**
+ * @brief First fit criterion implementation class
+*/
+class FirstFit
+{
+public:
+	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head);
+};
+
 
 #endif

@@ -12,3 +12,25 @@ MemorySlot * Criterion::choose_slot(MemorySlot * free_mem_list_head)
 {
 	return nullptr;
 }
+
+/* Best Fit Criterion class -----------------------------------------------------*/
+/**
+ * @brief Walk through a MemorySlot list to the choosen the best fit
+ * @param free_mem_list_head: Pointer to the first MemorySlot object
+ * @returns Choosen MemorySlot
+*/
+MemorySlot * BestFit::choose_slot(MemorySlot * free_mem_list_head)
+{
+	return nullptr;
+}
+
+/* First Fit Criterion class -----------------------------------------------------*/
+/**
+ * @brief Walk through a MemorySlot list to the choosen the first fit
+ * @param free_mem_list_head: Pointer to the first MemorySlot object
+ * @returns Choosen MemorySlot
+*/
+MemorySlot * FirstFit::choose_slot(MemorySlot * free_mem_list_head)
+{
+	return nullptr;
+}
