@@ -4,12 +4,12 @@
 #include "MemorySlot.h"
 
 /**
- * @brief Abstract class to define how the MMU access the decition criterion
+ * @brief Model class to define how the MMU access the decision criterion
 */
 class Criterion
 {
 public:
-	virtual MemorySlot * choose_slot(MemorySlot * free_mem_list_head);
+	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head);
 };
 
 
