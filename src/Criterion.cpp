@@ -8,7 +8,7 @@
  * @param free_mem_list_head: Pointer to the first MemorySlot object
  * @returns Choosen MemorySlot
 */
-MemorySlot * Criterion::choose_slot(MemorySlot * free_mem_list_head)
+MemorySlot * Criterion::choose_slot(MemorySlot * free_mem_list_head, unsigned int size)
 {
 	return nullptr;
 }
@@ -19,7 +19,7 @@ MemorySlot * Criterion::choose_slot(MemorySlot * free_mem_list_head)
  * @param free_mem_list_head: Pointer to the first MemorySlot object
  * @returns Choosen MemorySlot
 */
-MemorySlot * BestFit::choose_slot(MemorySlot * free_mem_list_head)
+MemorySlot * BestFit::choose_slot(MemorySlot * free_mem_list_head, unsigned int size)
 {
 	return nullptr;
 }
@@ -30,7 +30,7 @@ MemorySlot * BestFit::choose_slot(MemorySlot * free_mem_list_head)
  * @param free_mem_list_head: Pointer to the first MemorySlot object
  * @returns Choosen MemorySlot
 */
-MemorySlot * FirstFit::choose_slot(MemorySlot * free_mem_list_head)
+MemorySlot * FirstFit::choose_slot(MemorySlot * free_mem_list_head, unsigned int size)
 {
 	return nullptr;
 }
