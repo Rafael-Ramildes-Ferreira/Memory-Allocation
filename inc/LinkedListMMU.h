@@ -5,7 +5,9 @@
 
 
 class LinkedListMMU {
+
 	private:
     		LinkedList<MemoryAllocatedItem> *list;
+    		
 };
 #endif

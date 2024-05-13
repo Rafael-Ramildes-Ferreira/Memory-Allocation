@@ -2,6 +2,7 @@
 #define _MEMORYALLOCATEDITEM_CLASS_H
 #include <stdint>
 
+
 class MemoryAllocatedItem {
 	private:
     		unsigned int id;

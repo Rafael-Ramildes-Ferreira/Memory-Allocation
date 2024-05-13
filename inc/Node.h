@@ -2,7 +2,6 @@
 #define _NODE_CLASS_H
 #include "MemoryAllocatedItem"
 
-
 class Node {
 	private:
     		MemoryAllocatedItem *item;

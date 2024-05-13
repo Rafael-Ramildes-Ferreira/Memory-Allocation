@@ -6,7 +6,7 @@ template <typename T>
 
 class LinkedList {
 	private:
-				T *allocatedItem;				
+		T *allocatedItem;				
     		Node *head, *tail;
     		int size;
 	public:
