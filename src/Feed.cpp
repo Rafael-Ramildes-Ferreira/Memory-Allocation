@@ -3,6 +3,7 @@
 
 Feed::Feed(char * path)
 {
+	this->path = path;
 }
 
 Feed::~Feed()
@@ -17,5 +18,5 @@ void read()
 
 void print_info()
 {
-	
+
 }
