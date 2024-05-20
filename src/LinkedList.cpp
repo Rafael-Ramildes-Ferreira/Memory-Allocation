@@ -4,8 +4,8 @@
 
 LinkedList::LinkedList(){
 
-	this->head = null;
-  this->tail = null;
+	this->first = null;
+  this->last = null;
   this->size = 0;
 }
 LinkedList::bool isEmpty(){
@@ -15,17 +15,17 @@ LinkedList::void addFirst(T *item){
     Node newNode = new Node(item);
         
     if (isEmpty()) {
-			this->head = &newNode;
-			this->tail = &newNode;
+			this->first = &newNode;
+			this->last = &newNode;
     } else {
-			newNode->next = &this->head;
-			this->head.prev = &newNode;
-			this->head = &newNode;
+			newNode->next = &this->first;
+			this->first.prev = &newNode;
+			this->first = &newNode;
     }
 	
     size += 1;
 }
-LinkedList::void add(int index, T *item){
+LinkedList::void insert(int index, T *item){
 	if (index < 0 || index >= this->size){
 		cout << "[ERRO] Index not exist";
 		return
@@ -37,7 +37,7 @@ LinkedList::void add(int index, T *item){
     if (index == 0) {
         this->addFirst(item);
     }  else {
-        Node aux = this->head;
+        Node aux = this->first;
             
         for (int i = 0; i < index - 1; i++)
             aux = &aux->next;
@@ -50,19 +50,19 @@ LinkedList::void add(int index, T *item){
         size += 1;
     }
 }
-LinkedList::T* get_AllocatedItem(int id){
+LinkedList::int find(int id){
 		
-    Node aux = &this.head;
+    Node aux = &this->first;
       
     for (int i = 0; i < this->size; i++){
     	aux = &aux->next;
     	if(aux->item.id == id){
-    		return &aux->item;
+    		return 1;
     	}
     }
         
     cout << "[ERRO] Item not exist";   
-    return;
+    return -1;
 
 }
 LinkedList::T* remove(int id){

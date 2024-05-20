@@ -1,13 +1,13 @@
 #ifndef _NODE_CLASS_H
 #define _NODE_CLASS_H
-#include "MemoryAllocatedItem"
+template <typename T>
 
 class Node {
 	private:
-    		MemoryAllocatedItem *item;
+    		T* item;
     		Node *next;
     		Node *prev;
     	public:
-    		Node(MemoryAllocatedItem *item);
+    		Node(T *item);
 };
 #endif
