@@ -9,15 +9,15 @@ MemoryAllocatedItem::MemoryAllocatedItem(unsigned int id, bool allcocated_memory
 		
 MemoryAllocatedItem::~MemoryAllocatedItem(){}
 	
-MemoryAllocatedItem::unsigned int get_id(void){
+unsigned int MemoryAllocatedItem::get_id(void){
 	return  this->id;
 }
-MemoryAllocatedItem::bool get_allcocatedMemory(void){
+bool MemoryAllocatedItem::get_allcocatedMemory(void){
 	return this->allcocated_memory;
 }
-MemoryAllocatedItem::unsigned int get_startAddr(void){
+unsigned int MemoryAllocatedItem::get_startAddr(void){
 	return this->start_addr;
 }
-MemoryAllocatedItem::unsigned int get_sizeBytes(void){
+unsigned int MemoryAllocatedItem::get_sizeBytes(void){
 	return this->size_bytes;
 }

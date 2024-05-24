@@ -1,17 +1,23 @@
 #include "MemoryAllocatedItem.h"
 #include "Node.h"
 #include "LinkedList.h"
+#include <cassert>
 
-LinkedList::LinkedList(){
+template<typename T>
+LinkedList<T>::LinkedList(){
 
-	this->first = null;
-  this->last = null;
+	this->first = nullptr;
+  this->last = nullptr;
   this->size = 0;
 }
-LinkedList::bool isEmpty(){
-	this->size == 0 ? return 1: return 0;
+
+template<typename T>
+bool LinkedList<T>::isEmpty(){
+	return this->size == 0;
 }
-LinkedList::void addFirst(T *item){
+
+template<typename T>
+void LinkedList<T>::addFirst(T *item){
     Node newNode = new Node(item);
         
     if (isEmpty()) {
@@ -25,11 +31,10 @@ LinkedList::void addFirst(T *item){
 	
     size += 1;
 }
-LinkedList::void insert(int index, T *item){
-	if (index < 0 || index >= this->size){
-		cout << "[ERRO] Index not exist";
-		return
-	}
+
+template<typename T>
+void LinkedList<T>::insert(int index, T *item){
+	assert(index < 0 || index >= this->size);
         	
         
     Node newNode = new Node(item);
@@ -50,7 +55,9 @@ LinkedList::void insert(int index, T *item){
         size += 1;
     }
 }
-LinkedList::int find(int id){
+
+template<typename T>
+int LinkedList<T>::find(int id){
 		
     Node aux = &this->first;
       
@@ -61,11 +68,11 @@ LinkedList::int find(int id){
     	}
     }
         
-    cout << "[ERRO] Item not exist";   
-    return -1;
-
+    assert(false);
 }
-LinkedList::T* remove(int id){
+
+template<typename T>
+T* LinkedList<T>::remove(int id){
 
     Node aux = this.head;
    
@@ -79,8 +86,7 @@ LinkedList::T* remove(int id){
     	}
     }
     
-    cout << "[ERRO] Item not exist";    
-    return;
+    assert(false);
 }
 
 

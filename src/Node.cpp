@@ -1,8 +1,9 @@
 #include "MemoryAllocatedItem.h"
 #include "Node.h"
 
-Node::Node(T *item){
+template <typename T>
+Node<T>::Node(T *item){
 	this->item = &item;
-    	this->next = null;
-    	this->prev = null;
+    	this->next = nullptr;
+    	this->prev = nullptr;
 }

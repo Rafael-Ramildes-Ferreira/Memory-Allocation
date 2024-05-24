@@ -1,11 +1,12 @@
 #ifndef _LINKEDLIST_CLASS_H
 #define _LINKEDLIST_CLASS_H
-#include "Node"
-#include <stdint>
+#include "Node.h"
+#include <cstdint>
 
+template<typename T>
 class LinkedList {
 	private:				
-    		Node *first, *last;
+    		Node<T> *first, *last;
     		int size;
 	public:
 		LinkedList();

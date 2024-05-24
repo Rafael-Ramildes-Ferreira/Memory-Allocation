@@ -1,6 +1,6 @@
 #ifndef _MEMORYALLOCATEDITEM_CLASS_H
 #define _MEMORYALLOCATEDITEM_CLASS_H
-#include <stdint>
+#include <cstdint>
 
 
 class MemoryAllocatedItem {
