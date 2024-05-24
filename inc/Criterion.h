@@ -9,7 +9,11 @@
 class Criterion
 {
 public:
-	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head, unsigned int size);
+	static MemorySlot * choose_slot(
+		MemorySlot * free_mem_list_head, 
+		unsigned int list_size, 
+		unsigned int mem_size
+		);
 };
 
 /**
@@ -18,7 +22,11 @@ public:
 class BestFit
 {
 public:
-	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head, unsigned int size);
+	static MemorySlot * choose_slot(
+		MemorySlot * free_mem_list_head, 
+		unsigned int list_size, 
+		unsigned int mem_size
+		);
 };
 
 /**
@@ -27,7 +35,11 @@ public:
 class FirstFit
 {
 public:
-	static MemorySlot * choose_slot(MemorySlot * free_mem_list_head, unsigned int size);
+	static MemorySlot * choose_slot(
+		MemorySlot * free_mem_list_head, 
+		unsigned int list_size, 
+		unsigned int mem_size
+		);
 };
 
 

@@ -8,7 +8,11 @@
  * @param free_mem_list_head: Pointer to the first MemorySlot object
  * @returns Choosen MemorySlot
 */
-MemorySlot * Criterion::choose_slot(MemorySlot * free_mem_list_head, unsigned int size)
+MemorySlot * Criterion::choose_slot(
+		MemorySlot * free_mem_list_head, 
+		unsigned int list_size, 
+		unsigned int mem_size
+		)
 {
 	return nullptr;
 }
@@ -19,9 +23,27 @@ MemorySlot * Criterion::choose_slot(MemorySlot * free_mem_list_head, unsigned in
  * @param free_mem_list_head: Pointer to the first MemorySlot object
  * @returns Choosen MemorySlot
 */
-MemorySlot * BestFit::choose_slot(MemorySlot * free_mem_list_head, unsigned int size)
+MemorySlot * BestFit::choose_slot(
+		MemorySlot * free_mem_list_head, 
+		unsigned int list_size, 
+		unsigned int mem_size
+		)
 {
-	return nullptr;
+	MemorySlot * bestfit = nullptr;
+	for(int i = 0; i < list_size; i++){
+		if(	free_mem_list_head[i].get_size() >= mem_size)
+		{
+			if (bestfit == nullptr)
+			{
+				bestfit = &free_mem_list_head[i];
+			}
+			else if(free_mem_list_head[i].get_size() < bestfit->get_size())
+			{
+				bestfit = &free_mem_list_head[i];
+			}
+		}
+	}
+	return bestfit;
 }
 
 /* First Fit Criterion class -----------------------------------------------------*/
@@ -30,7 +52,14 @@ MemorySlot * BestFit::choose_slot(MemorySlot * free_mem_list_head, unsigned int 
  * @param free_mem_list_head: Pointer to the first MemorySlot object
  * @returns Choosen MemorySlot
 */
-MemorySlot * FirstFit::choose_slot(MemorySlot * free_mem_list_head, unsigned int size)
+MemorySlot * FirstFit::choose_slot(
+		MemorySlot * free_mem_list_head, 
+		unsigned int list_size, 
+		unsigned int mem_size
+		)
 {
-	return nullptr;
+	for(int i = 0; i < list_size; i++){
+		if(free_mem_list_head[i].get_size() >= mem_size) return &free_mem_list_head[i];
+	}
+	return nullptr;  // No available memory slot
 }

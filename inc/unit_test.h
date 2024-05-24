@@ -9,7 +9,7 @@ class has_choose_slot
 {
 private:
     template<typename U>
-    static auto test(int) -> decltype(U::choose_slot(nullptr,0), std::true_type{});
+    static auto test(int) -> decltype(U::choose_slot(nullptr,0,0), std::true_type{});
     
     template<typename U>
     static std::false_type test(...);
