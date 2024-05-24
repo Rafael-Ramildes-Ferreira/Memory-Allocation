@@ -41,3 +41,4 @@ clean:
 	rm -rf $(OBJ_DIR)
 	rm -rf $(TEST_OBJ_DIR)
 	rm $(PROJECT_MAIN)
+	rm $(TEST)
