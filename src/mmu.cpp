@@ -53,7 +53,7 @@ bool MMU::allocate(unsigned int sizeBytes, unsigned int id)
         {
             break;
         }
-        else if (freeSpace->getSizeBytes() == sizeBytes)
+        else if (this->algorithm != worstFit && freeSpace->getSizeBytes() == sizeBytes)
         {
             freeSpaceToAllocate = freeSpace;
             break;
