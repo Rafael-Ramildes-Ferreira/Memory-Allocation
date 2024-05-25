@@ -17,6 +17,7 @@ public:
     MemoryAllocatedItem *findNextFreeMemory() override;
     MemoryAllocatedItem *allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate) override;
     MemoryAllocatedItem *deallocate(unsigned int id) override;
+    MemoryAllocatedItem *allocate(unsigned int sizeBytes,unsigned int id, uint32_t  freeSpaceToAllocate) override {return nullptr;};
 
     LinkedList<MemoryAllocatedItem> *getList();
     void setList(LinkedList<MemoryAllocatedItem> *list);

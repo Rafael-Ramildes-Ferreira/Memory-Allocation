@@ -7,7 +7,7 @@
 class Feed
 {
 private:
-	MMU * mmu;
+	// MMU<T> * mmu;
 	char * path;
 public:
 	Feed(char * path);

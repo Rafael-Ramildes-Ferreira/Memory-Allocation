@@ -2,6 +2,7 @@
 #define __ALLOCATION_MAP_H
 
 #include "memoryAllocatedItem.hpp"
+#include "MemorySlot.h"
 
 class AllocationMap
 {
@@ -25,6 +26,8 @@ public:
     // Função puramente virtual (método abstrato)
     virtual MemoryAllocatedItem *deallocate(unsigned int id) {return nullptr;};
 
+    virtual MemoryAllocatedItem *allocate(unsigned int sizeBytes,unsigned int id, uint32_t  freeSpaceToAllocate) {return nullptr;};
+
     // Getter para currentIndex
     unsigned int getCurrentIndex() const
     {
@@ -36,6 +39,8 @@ public:
     {
         currentIndex = index;
     }
+
+    virtual MemorySlot *find_free_memory() {return nullptr;}
 };
 
 #endif
