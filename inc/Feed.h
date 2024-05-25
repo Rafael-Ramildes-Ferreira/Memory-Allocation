@@ -1,7 +1,6 @@
+#include "mmu.hpp"
 #ifndef __FEED_H
 #define __FEED_H
-
-#include "MMU.h"
 
 class Feed
 {
