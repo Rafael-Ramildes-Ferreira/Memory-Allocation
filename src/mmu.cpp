@@ -19,6 +19,11 @@ Algorithm MMU::getAlgorithm()
     return this->algorithm;
 }
 
+AllocationMap MMU::getAllocationMap()
+{
+    return this->allocationMap;
+}
+
 void MMU::setMinBlock(unsigned int minBlock)
 {
     this->minBlock = minBlock;
@@ -27,6 +32,11 @@ void MMU::setMinBlock(unsigned int minBlock)
 void MMU::setAlgorithm(Algorithm algorithm)
 {
     this->algorithm = algorithm;
+}
+
+void MMU::setAllocationMap(AllocationMap allocationMap)
+{
+    this->allocationMap = allocationMap;
 }
 
 bool MMU::allocate(unsigned int sizeBytes, unsigned int id)
