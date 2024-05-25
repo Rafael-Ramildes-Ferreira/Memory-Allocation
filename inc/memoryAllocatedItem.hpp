@@ -1,3 +1,6 @@
+#ifndef __MEMORY_ALLOCATED_ITEM_H
+#define __MEMORY_ALLOCATED_ITEM_H
+
 class MemoryAllocatedItem
 {
 private:
@@ -25,3 +28,5 @@ public:
 
     void setSizeBytes(unsigned int sizeBytes);
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __DOUBLY_LINKED_LIST
+#define __DOUBLY_LINKED_LIST
+
 #include <stdexcept> // C++ exceptions
 
 namespace structures
@@ -356,7 +359,7 @@ T structures::DoublyLinkedList<T>::pop_back()
         size_--;     // decrementa o tamanho
         return data; // retorna o dado
     }
-    return size_;
+    return nullptr; // size_;
 }
 
 template <typename T>
@@ -379,7 +382,7 @@ T structures::DoublyLinkedList<T>::pop_front()
         size_--;     // decrementa o tamanho
         return data; // retorna o dado
     }
-    return size_;
+    return nullptr; // size_;
 }
 
 template <typename T>
@@ -477,3 +480,5 @@ std::size_t structures::DoublyLinkedList<T>::size() const
 {
     return size_;
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __LINKED_LIST_MMU_H
+#define __LINKED_LIST_MMU_H
+
 #include "doubly_linked_list.h"
 #include "memoryAllocatedItem.hpp"
 #include "allocationMap.hpp"
@@ -18,3 +21,5 @@ public:
     structures::DoublyLinkedList<MemoryAllocatedItem *> *getList();
     void setList(structures::DoublyLinkedList<MemoryAllocatedItem *> *list);
 };
+
+#endif

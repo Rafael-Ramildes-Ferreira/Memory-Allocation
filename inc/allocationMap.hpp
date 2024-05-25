@@ -1,4 +1,8 @@
+#ifndef __ALLOCATION_MAP_H
+#define __ALLOCATION_MAP_H
+
 #include "memoryAllocatedItem.hpp"
+
 class AllocationMap
 {
 protected:
@@ -13,13 +17,13 @@ public:
     virtual ~AllocationMap() {}
 
     // Função puramente virtual (método abstrato)
-    virtual MemoryAllocatedItem *findNextFreeMemory();
+    virtual MemoryAllocatedItem *findNextFreeMemory() {return nullptr;};
 
     // Função puramente virtual (método abstrato)
-    virtual MemoryAllocatedItem *allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate);
+    virtual MemoryAllocatedItem *allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate) {return nullptr;};
 
     // Função puramente virtual (método abstrato)
-    virtual MemoryAllocatedItem *deallocate(unsigned int id);
+    virtual MemoryAllocatedItem *deallocate(unsigned int id) {return nullptr;};
 
     // Getter para currentIndex
     unsigned int getCurrentIndex() const
@@ -33,3 +37,5 @@ public:
         currentIndex = index;
     }
 };
+
+#endif

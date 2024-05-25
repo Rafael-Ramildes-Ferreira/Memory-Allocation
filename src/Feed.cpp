@@ -14,7 +14,7 @@ Feed::Feed(char * path)
 
 Feed::~Feed()
 {
-	delete mmu;
+	delete mmu;	// Acho que mmu não é pra pertencer ao Feed
 }
 
 void Feed::read()

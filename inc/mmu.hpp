@@ -1,3 +1,6 @@
+#ifndef __MMU_H
+#define __MMU_H
+
 #include "allocationMap.hpp"
 enum Algorithm
 {
@@ -28,3 +31,5 @@ public:
     bool allocate(unsigned int sizeBytes, unsigned int id);
     void deallocate(unsigned int id);
 };
+
+#endif
