@@ -1,13 +1,13 @@
 #include "linkedListMMU.hpp"
-#include "doubly_linked_list.h"
+#include "LinkedList.h"
 
 MemoryAllocatedItem *LinkedListMMU::findNextFreeMemory()
 {
-    unsigned int listSize = this->list->size();
+    unsigned int listSize = this->list->size;
     unsigned int index = (this->currentIndex + 1) % listSize;
     while (index != currentIndex)
     {
-        auto memoryAllocatedItem = this->list->at(index);
+        auto memoryAllocatedItem = this->list->get_item(index);
         if (!memoryAllocatedItem->getAllocatedMemory())
         {
             this->currentIndex = index;
@@ -20,12 +20,12 @@ MemoryAllocatedItem *LinkedListMMU::findNextFreeMemory()
 
 MemoryAllocatedItem *LinkedListMMU::allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate)
 {
-    auto index = this->list->find(freeSpaceToAllocate);
-    this->list->insert(memoryToAllocate, index);
+    auto index = this->list->find(freeSpaceToAllocate->getId());
+    this->list->insert(index, memoryToAllocate);
 
     if (memoryToAllocate->getSizeBytes() == freeSpaceToAllocate->getSizeBytes())
     {
-        this->list->remove(freeSpaceToAllocate);
+        this->list->remove(freeSpaceToAllocate->getId());
         return nullptr;
     }
     else
@@ -39,9 +39,9 @@ MemoryAllocatedItem *LinkedListMMU::allocateInFreeSpace(MemoryAllocatedItem *mem
 
 MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
 {
-    for (int i = 0; i++; i < this->list->size())
+    for (int i = 0; i++; i < this->list->size)
     {
-        auto memoryAllocatedItem = this->list->at(i);
+        auto memoryAllocatedItem = this->list->get_item(i);
         if (memoryAllocatedItem->getId() == id && memoryAllocatedItem->getAllocatedMemory())
         {
             auto totalMemoryFree = memoryAllocatedItem->getSizeBytes();
@@ -50,22 +50,22 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
             auto startAddr = memoryAllocatedItem->getStartAddr();
             if (i > 0)
             {
-                auto before = this->list->at(i - 1);
+                auto before = this->list->get_item(i - 1);
                 if (!before->getAllocatedMemory())
                 {
                     totalMemoryFree += before->getSizeBytes();
                     startAddr -= before->getSizeBytes();
-                    this->list->pop(i + 1);
+                    this->list->remove(this->list->get_item(i + 1)->getId());
                     fixedIndex--;
                 }
             }
-            if (i < this->list->size() - 1)
+            if (i < this->list->size - 1)
             {
-                auto after = this->list->at(fixedIndex + 1);
+                auto after = this->list->get_item(fixedIndex + 1);
                 if (!after->getAllocatedMemory())
                 {
                     totalMemoryFree += after->getSizeBytes();
-                    this->list->pop(fixedIndex + 1);
+                    this->list->remove(this->list->get_item(fixedIndex + 1)->getId());
                 }
             }
             memoryAllocatedItem->setAllocatedMemory(false);
@@ -79,20 +79,20 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
 
 LinkedListMMU::LinkedListMMU()
 {
-    this->list = new structures::DoublyLinkedList<MemoryAllocatedItem *>;
+    this->list = new LinkedList<MemoryAllocatedItem>;
 }
 
-LinkedListMMU::LinkedListMMU(structures::DoublyLinkedList<MemoryAllocatedItem *> *list)
+LinkedListMMU::LinkedListMMU(LinkedList<MemoryAllocatedItem> *list)
 {
     this->list = list;
 }
 
-structures::DoublyLinkedList<MemoryAllocatedItem *> *LinkedListMMU::getList()
+LinkedList<MemoryAllocatedItem> *LinkedListMMU::getList()
 {
     return this->list;
 }
 
-void LinkedListMMU::setList(structures::DoublyLinkedList<MemoryAllocatedItem *> *list)
+void LinkedListMMU::setList(LinkedList<MemoryAllocatedItem> *list)
 {
     this->list = list;
 }
