@@ -3,13 +3,13 @@
 #include "LinkedList.h"
 #include <cassert>
 
-template<typename T>
-LinkedList<T>::LinkedList(){
+// template<typename T>
+// LinkedList<T>::LinkedList(){
 
-    this->first = nullptr;
-    this->last = nullptr;
-    this->size = 0;
-}
+//     this->first = nullptr;
+//     this->last = nullptr;
+//     this->size = 0;
+// }
 
 template<typename T>
 bool LinkedList<T>::isEmpty(){
@@ -18,15 +18,15 @@ bool LinkedList<T>::isEmpty(){
 
 template<typename T>
 void LinkedList<T>::addFirst(T *item){
-    Node<T> newNode = new Node(item);
+    Node<T> *newNode = new Node(item);
         
     if (isEmpty()) {
-			this->first = &newNode;
-			this->last = &newNode;
+			this->first = newNode;
+			this->last = newNode;
     } else {
-			newNode->next = &this->first;
-			this->first.prev = &newNode;
-			this->first = &newNode;
+			newNode->next = this->first;
+			this->first->prev = newNode;
+			this->first = newNode;
     }
 	
     size += 1;
@@ -59,10 +59,10 @@ void LinkedList<T>::insert(int index, T *item){
 template<typename T>
 int LinkedList<T>::find(int id){
 		
-    Node<T> *aux = &this->first;
+    Node<T> *aux = this->first;
       
     for (int i = 0; i < this->size; i++){
-    	if(aux->item.id == id){
+    	if(aux->item->getId() == id){
     		return i;
     	}
     	aux = aux->next;
@@ -77,11 +77,11 @@ T* LinkedList<T>::remove(int id){
     Node<T> *aux = this->first;
    
     for (int i = 0; i < this->size; i++){
-    	if(aux->item.id == id){
+    	if(aux->item->getId() == id){
     		aux->prev->next = aux->next;
             aux->next->prev = aux->prev;
             size -= 1;
-            Node<T> *mem_allocated = aux->item;
+            T *mem_allocated = aux->item;
             delete aux; // Should not delete the item but only the Node structure
     		return mem_allocated;
     	}

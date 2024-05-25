@@ -8,7 +8,7 @@ TEST_DIR := test
 TEST_SRC_DIR := $(TEST_DIR)/src
 TEST_OBJ_DIR := $(TEST_DIR)/obj
 
-FLAGS := -I$(INC_DIR)/
+FLAGS := -I$(INC_DIR)/ -I$(SRC_DIR)/
 
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 INC := $(wildcard $(INC_DIR)/*.h $(INC_DIR)/*.hpp)

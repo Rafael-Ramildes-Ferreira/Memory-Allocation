@@ -10,4 +10,6 @@ class Node {
 		
 		Node(T *item);
 };
+
+#include "Node.tpp"
 #endif

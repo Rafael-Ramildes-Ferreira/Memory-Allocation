@@ -10,7 +10,12 @@ class LinkedList {
 	public:
 		int size;
 
-		LinkedList();
+		LinkedList(){
+
+			this->first = nullptr;
+			this->last = nullptr;
+			this->size = 0;
+		}
 		bool isEmpty();
 		void addFirst(T *item);
 		void insert(int index, T *item);
@@ -18,4 +23,6 @@ class LinkedList {
 		T* remove(int id);
 		T* get_item(unsigned int index);
 };
+
+#include "LinkedList.tpp"
 #endif
