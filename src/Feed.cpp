@@ -40,11 +40,11 @@ void Feed::read()
 		{
 			case 'A':
 				file >> size >> id;
-				// this->mmu->allocat(size,id);
+				// this->mmu->allocate(size,id);
 				break;
 			case 'D':
 				file >> id;
-				// this->mmu->deallocat(id);
+				// this->mmu->deallocate(id);
 				break;
 			default:
 				return;
