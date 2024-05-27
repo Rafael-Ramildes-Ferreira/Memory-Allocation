@@ -101,5 +101,5 @@ void LinkedListMMU::setList(LinkedList<MemoryAllocatedItem> *list)
 
 void LinkedListMMU::print(void)
 {
-    std::cout << "Vamo implementar isso ainda, calma!" << std::endl;
+    std::cout << "LinkedListMMU::print(void): Vamo implementar isso ainda, calma!" << std::endl;
 }
