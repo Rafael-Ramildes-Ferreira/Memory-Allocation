@@ -41,6 +41,8 @@ public:
     }
 
     virtual MemorySlot *find_free_memory() {return nullptr;}
+
+    virtual void print(void) {};
 };
 
 #endif

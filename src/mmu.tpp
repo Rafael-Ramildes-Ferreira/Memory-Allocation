@@ -1,14 +1,17 @@
 #include "mmu.hpp"
 #include "memoryAllocatedItem.hpp"
 #include "MemorySlot.h"
+#include <iostream>
 
 template<typename T>
-MMU<T>::MMU(unsigned int minBlock, allocation_algorithm algorithm, AllocationMap allocationMap)
+MMU<T>::MMU(unsigned int minBlock, allocation_algorithm algorithm, AllocationMap *allocationMap)
 {
     // TODO Verificar se o minBlock usa no método de LinkedList, pois não estou usando...
     this->minBlock = minBlock;
     this->algorithm = algorithm;
     this->allocationMap = allocationMap;
+
+    std::cout << "MMU Construída!!" << std::endl;
 }
 
 template<typename T>
@@ -24,7 +27,7 @@ allocation_algorithm MMU<T>::getAlgorithm()
 }
 
 template<typename T>
-AllocationMap MMU<T>::getAllocationMap()
+AllocationMap *MMU<T>::getAllocationMap()
 {
     return this->allocationMap;
 }
@@ -50,7 +53,7 @@ void MMU<T>::setAllocationMap(AllocationMap allocationMap)
 template<typename T>
 bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
 {
-    MemorySlot *mem_slot_list = allocationMap.find_free_memory();
+    MemorySlot *mem_slot_list = allocationMap->find_free_memory();
     if(mem_slot_list == nullptr){
         // Empty list, no free space
         return false;
@@ -62,16 +65,16 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
         return false;
     }
 
-    this->allocationMap.allocate(sizeBytes,id,selectedSlot->get_index());
+    this->allocationMap->allocate(sizeBytes,id,selectedSlot->get_index());
 
 //     if (this->algorithm != circular)
 //     {
-//         this->allocationMap.setCurrentIndex(0);
+//         this->allocationMap->setCurrentIndex(0);
 //     }
 //     MemoryAllocatedItem *freeSpaceToAllocate = nullptr;
 //     while (true)
 //     {
-//         auto freeSpace = this->allocationMap.findNextFreeMemory();
+//         auto freeSpace = this->allocationMap->findNextFreeMemory();
 //         if (freeSpace == nullptr)
 //         {
 //             break;
@@ -113,7 +116,7 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
 //     {
 //         // TODO Ver se está correto isso aqui: freeSpaceToAllocate->getStartAddr()
 //         auto memoryToAllocate = new MemoryAllocatedItem(id, true, freeSpaceToAllocate->getStartAddr(), sizeBytes);
-//         this->allocationMap.allocateInFreeSpace(memoryToAllocate, freeSpaceToAllocate);
+//         this->allocationMap->allocateInFreeSpace(memoryToAllocate, freeSpaceToAllocate);
 //         return true;
 //     }
 }
@@ -121,5 +124,10 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
 template<typename T>
 void MMU<T>::deallocate(unsigned int id)
 {
-    this->allocationMap.deallocate(id);
+    this->allocationMap->deallocate(id);
+}
+
+template<typename T>
+void MMU<T>::printMemory(){
+    allocationMap->print();
 }

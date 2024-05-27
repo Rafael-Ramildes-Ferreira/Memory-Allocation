@@ -1,5 +1,6 @@
 #include "linkedListMMU.hpp"
 #include "LinkedList.h"
+#include <iostream>
 
 MemoryAllocatedItem *LinkedListMMU::findNextFreeMemory()
 {
@@ -79,6 +80,7 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
 
 LinkedListMMU::LinkedListMMU()
 {
+    std::cout << "Criando LinkedListMMU" << std::endl;
     this->list = new LinkedList<MemoryAllocatedItem>;
 }
 
@@ -95,4 +97,9 @@ LinkedList<MemoryAllocatedItem> *LinkedListMMU::getList()
 void LinkedListMMU::setList(LinkedList<MemoryAllocatedItem> *list)
 {
     this->list = list;
+}
+
+void LinkedListMMU::print(void)
+{
+    std::cout << "Vamo implementar isso ainda, calma!" << std::endl;
 }

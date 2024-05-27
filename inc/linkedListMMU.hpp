@@ -21,6 +21,8 @@ public:
 
     LinkedList<MemoryAllocatedItem> *getList();
     void setList(LinkedList<MemoryAllocatedItem> *list);
+
+    void print(void) override;
 };
 
 #endif

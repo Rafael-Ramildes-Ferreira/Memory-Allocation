@@ -10,15 +10,15 @@ class MMU
 private:
     unsigned int minBlock;
     allocation_algorithm algorithm;
-    AllocationMap allocationMap;
+    AllocationMap *allocationMap;
     T criterion;
 
 public:
-    MMU(unsigned int minBlock, allocation_algorithm algorithm, AllocationMap allocationMap);
+    MMU(unsigned int minBlock, allocation_algorithm algorithm, AllocationMap *allocationMap);
 
     unsigned int getMinBlock();
     allocation_algorithm getAlgorithm();
-    AllocationMap getAllocationMap();
+    AllocationMap *getAllocationMap();
 
     void setMinBlock(unsigned int minBlock);
     void setAlgorithm(allocation_algorithm algorithm);
@@ -26,6 +26,8 @@ public:
 
     bool allocate(unsigned int sizeBytes, unsigned int id);
     void deallocate(unsigned int id);
+
+    void printMemory();
 };
 
 #include "mmu.tpp"
