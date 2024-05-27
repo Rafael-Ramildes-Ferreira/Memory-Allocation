@@ -2,15 +2,16 @@
 #define __FEED_H
 
 #include "mmu.hpp"
+#include <string>
 
 
 class Feed
 {
 private:
-	MMU * mmu;
-	char * path;
+	// MMU<T> * mmu;
+	std::string path;
 public:
-	Feed(char * path);
+	Feed(std::string path);
 	~Feed();
 	void read();
 	void print_info();
