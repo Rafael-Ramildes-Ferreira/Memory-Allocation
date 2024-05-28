@@ -1,7 +1,7 @@
 #ifndef __CRITERION_H
 #define __CRITERION_H
 
-#include "MemorySlot.h"
+#include "memoryAllocatedItem.hpp"
 
 /**
  * @brief Model class to define how the MMU access the decision criterion
@@ -9,9 +9,8 @@
 class Criterion
 {
 public:
-	static MemorySlot * choose_slot(
-		MemorySlot * free_mem_list_head, 
-		unsigned int list_size, 
+	static MemoryAllocatedItem * choose_slot(
+		MemoryAllocatedItem ** free_mem_list_head,
 		unsigned int mem_size
 		);
 };
@@ -22,9 +21,8 @@ public:
 class BestFit
 {
 public:
-	static MemorySlot * choose_slot(
-		MemorySlot * free_mem_list_head, 
-		unsigned int list_size, 
+	static MemoryAllocatedItem * choose_slot(
+		MemoryAllocatedItem ** free_mem_list_head,
 		unsigned int mem_size
 		);
 };
@@ -35,9 +33,8 @@ public:
 class FirstFit
 {
 public:
-	static MemorySlot * choose_slot(
-		MemorySlot * free_mem_list_head, 
-		unsigned int list_size, 
+	static MemoryAllocatedItem * choose_slot(
+		MemoryAllocatedItem ** free_mem_list_head,
 		unsigned int mem_size
 		);
 };

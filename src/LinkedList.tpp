@@ -104,3 +104,15 @@ T* LinkedList<T>::get_item(unsigned int index)
 	if(node == nullptr) return nullptr;
 	else return node->item;
 }
+
+template<typename T>
+Node<T> *LinkedList<T>::get_first()
+{
+    return this->first;
+}
+
+template<typename T>
+Node<T> *LinkedList<T>::get_last()
+{
+    return this->last;
+}

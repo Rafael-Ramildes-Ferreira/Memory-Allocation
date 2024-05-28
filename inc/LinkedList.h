@@ -22,6 +22,8 @@ class LinkedList {
 		int find(int id);
 		T* remove(int id);
 		T* get_item(unsigned int index);
+		Node<T> *get_first();
+		Node<T> *get_last();
 };
 
 #include "LinkedList.tpp"

@@ -30,7 +30,7 @@ void Feed::read()
 	// Reads configurations
 	unsigned int man_alg, men_size, smallest_block, alloc_alg;
 	file >> man_alg >> men_size >> smallest_block >> alloc_alg;
-	LinkedListMMU teste;
+	LinkedListMMU teste(men_size);
 	MMU<Criterion> *mmu = nullptr;
 	switch (alloc_alg)
 	{

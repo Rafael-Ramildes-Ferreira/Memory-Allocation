@@ -78,10 +78,12 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
     return nullptr;
 }
 
-LinkedListMMU::LinkedListMMU()
+LinkedListMMU::LinkedListMMU(unsigned int memSize)
 {
     std::cout << "Criando LinkedListMMU" << std::endl;
     this->list = new LinkedList<MemoryAllocatedItem>;
+    MemoryAllocatedItem *emptyMemory = new MemoryAllocatedItem(0,false,0,memSize);
+    this->list->addFirst(emptyMemory);
 }
 
 LinkedListMMU::LinkedListMMU(LinkedList<MemoryAllocatedItem> *list)
@@ -99,7 +101,26 @@ void LinkedListMMU::setList(LinkedList<MemoryAllocatedItem> *list)
     this->list = list;
 }
 
+MemoryAllocatedItem **LinkedListMMU::find_free_memory(void)
+{
+    MemoryAllocatedItem **free_memory_list = nullptr;
+    unsigned int index = 0;
+    for(int i = 0; i < this->list->size; i++)
+    {
+        MemoryAllocatedItem *mem_slot = this->list->get_item(i);
+        if(!mem_slot->getAllocatedMemory()){
+            free_memory_list[index++] = mem_slot;
+        }
+    }
+}
+
 void LinkedListMMU::print(void)
 {
-    std::cout << "LinkedListMMU::print(void): Vamo implementar isso ainda, calma!" << std::endl;
+    Node<MemoryAllocatedItem> *node = this->list->get_first();
+    while (node != nullptr)
+    {
+        MemoryAllocatedItem *item = node->item;
+        std::cout << item->getSizeBytes() << "\t" << item->getAllocatedMemory() << std::endl;
+        node = node->next;
+    }
 }
