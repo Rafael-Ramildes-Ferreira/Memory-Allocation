@@ -5,10 +5,15 @@
 #include "memoryAllocatedItem.hpp"
 #include "allocationMap.hpp"
 
+
+#define MAXIMUM_FREE_SLOTS 1000
+
 class LinkedListMMU : public AllocationMap
 {
 private:
     LinkedList<MemoryAllocatedItem> *list;
+
+	MemoryAllocatedItem *free_memory_list[MAXIMUM_FREE_SLOTS];
 
 public:
     LinkedListMMU(unsigned int memSize);

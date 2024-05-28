@@ -10,7 +10,7 @@ class Criterion
 {
 public:
 	static MemoryAllocatedItem * choose_slot(
-		MemoryAllocatedItem ** free_mem_list_head,
+		MemoryAllocatedItem * free_mem_list_head[],
 		unsigned int mem_size
 		);
 };
@@ -22,7 +22,7 @@ class BestFit
 {
 public:
 	static MemoryAllocatedItem * choose_slot(
-		MemoryAllocatedItem ** free_mem_list_head,
+		MemoryAllocatedItem * free_mem_list_head[],
 		unsigned int mem_size
 		);
 };
@@ -34,7 +34,7 @@ class FirstFit
 {
 public:
 	static MemoryAllocatedItem * choose_slot(
-		MemoryAllocatedItem ** free_mem_list_head,
+		MemoryAllocatedItem * free_mem_list_head[],
 		unsigned int mem_size
 		);
 };

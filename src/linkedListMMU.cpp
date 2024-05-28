@@ -103,15 +103,18 @@ void LinkedListMMU::setList(LinkedList<MemoryAllocatedItem> *list)
 
 MemoryAllocatedItem **LinkedListMMU::find_free_memory(void)
 {
-    MemoryAllocatedItem **free_memory_list = nullptr;
+    // MemoryAllocatedItem *free_memory_list[MAXIMUM_FREE_SLOTS];
     unsigned int index = 0;
     for(int i = 0; i < this->list->size; i++)
     {
         MemoryAllocatedItem *mem_slot = this->list->get_item(i);
         if(!mem_slot->getAllocatedMemory()){
-            free_memory_list[index++] = mem_slot;
+            this->free_memory_list[index] = mem_slot;
+            index++;
         }
     }
+
+    return this->free_memory_list;
 }
 
 void LinkedListMMU::print(void)

@@ -1,4 +1,5 @@
 #include "Criterion.h"
+#include <iostream>
 
 
 /* Model Criterion class -----------------------------------------------------*/
@@ -13,6 +14,7 @@ MemoryAllocatedItem * Criterion::choose_slot(
 		unsigned int mem_size
 		)
 {
+    std::cout << "Criterion::choose_slot" << std::endl;
 	return nullptr;
 }
 
@@ -23,12 +25,12 @@ MemoryAllocatedItem * Criterion::choose_slot(
  * @returns Choosen MemoryAllocatedItem
 */
 MemoryAllocatedItem * BestFit::choose_slot(
-		MemoryAllocatedItem ** free_mem_list_head, 
+		MemoryAllocatedItem * free_mem_list_head[], 
 		unsigned int mem_size
 		)
 {
 	MemoryAllocatedItem * bestfit = nullptr;
-	for(int i = 0; free_mem_list_head + i != nullptr; i++){
+	for(int i = 0; free_mem_list_head[i] != nullptr; i++){
 		if(	free_mem_list_head[i]->getSizeBytes() >= mem_size)
 		{
 			if (bestfit == nullptr)
@@ -55,6 +57,7 @@ MemoryAllocatedItem * FirstFit::choose_slot(
 		unsigned int mem_size
 		)
 {
+    std::cout << "FirstFit::choose_slot" << std::endl;
 	for(int i = 0; free_mem_list_head + i != nullptr; i++){
 		if(free_mem_list_head[i]->getSizeBytes() >= mem_size) return free_mem_list_head[i];
 	}

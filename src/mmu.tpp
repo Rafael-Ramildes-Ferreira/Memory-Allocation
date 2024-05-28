@@ -60,11 +60,12 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
     }
 
     MemoryAllocatedItem *freeSpaceToAllocate = criterion.choose_slot(mem_slot_list,sizeBytes);
-    if(freeSpaceToAllocate = nullptr){
+    if(freeSpaceToAllocate == nullptr){
         // No slot large enough
         return false;
     }
 
+    std::cout << "Passou" << std::endl;
     MemoryAllocatedItem *memoryToAllocate = new MemoryAllocatedItem(id,1,freeSpaceToAllocate->getStartAddr(), sizeBytes);
     this->allocationMap->allocateInFreeSpace(memoryToAllocate, freeSpaceToAllocate);
     return true;
