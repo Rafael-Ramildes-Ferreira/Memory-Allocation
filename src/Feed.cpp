@@ -36,6 +36,7 @@ void Feed::read()
 	{
 	case BEST_FIT:
 		{
+			std::cout << "Best Fit:" << std::endl;
 			MMU<BestFit> *mmu = new MMU<BestFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
 			// mmu = (MMU<Criterion>*) aux;
 
@@ -50,10 +51,12 @@ void Feed::read()
 				{
 					case 'A':
 						file >> size >> id;
+						std::cout << "A " << size << " " << id << std::endl;
 						mmu->allocate(size,id);
 						break;
 					case 'D':
 						file >> id;
+						std::cout << "D " << id << std::endl;
 						mmu->deallocate(id);
 						break;
 					default:
@@ -62,12 +65,14 @@ void Feed::read()
 				}
 			}
 
+			std::cout << std::endl;
 			mmu->printMemory();
 		}
 		break;
 
 	case FIRST_FIT:
 		{
+			std::cout << "First Fit:" << std::endl;
 			MMU<FirstFit> *mmu = new MMU<FirstFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
 			// mmu = (MMU<Criterion>*) aux;
 
@@ -82,10 +87,12 @@ void Feed::read()
 				{
 					case 'A':
 						file >> size >> id;
+						std::cout << "A " << size << " " << id << std::endl;
 						mmu->allocate(size,id);
 						break;
 					case 'D':
 						file >> id;
+						std::cout << "D " << id << std::endl;
 						mmu->deallocate(id);
 						break;
 					default:
@@ -94,6 +101,7 @@ void Feed::read()
 				}
 			}
 
+			std::cout << std::endl;
 			mmu->printMemory();
 		}
 		break;
