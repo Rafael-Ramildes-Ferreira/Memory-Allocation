@@ -1,16 +1,16 @@
 #include "Criterion.h"
+#include <iostream>
 
 
 /* Model Criterion class -----------------------------------------------------*/
 /**
  * @brief Example function implementation. This function should walk through a
- * MemorySlot list to the choosen one based on a given criterion
- * @param free_mem_list_head: Pointer to the first MemorySlot object
- * @returns Choosen MemorySlot
+ * MemoryAllocatedItem list to the choosen one based on a given criterion
+ * @param free_mem_list_head: Pointer to the first MemoryAllocatedItem object
+ * @returns Choosen MemoryAllocatedItem
 */
-MemorySlot * Criterion::choose_slot(
-		MemorySlot * free_mem_list_head, 
-		unsigned int list_size, 
+MemoryAllocatedItem * Criterion::choose_slot(
+		MemoryAllocatedItem ** free_mem_list_head,
 		unsigned int mem_size
 		)
 {
@@ -19,27 +19,26 @@ MemorySlot * Criterion::choose_slot(
 
 /* Best Fit Criterion class -----------------------------------------------------*/
 /**
- * @brief Walk through a MemorySlot list to the choosen the best fit
- * @param free_mem_list_head: Pointer to the first MemorySlot object
- * @returns Choosen MemorySlot
+ * @brief Walk through a MemoryAllocatedItem list to the choosen the best fit
+ * @param free_mem_list_head: Pointer to the first MemoryAllocatedItem object
+ * @returns Choosen MemoryAllocatedItem
 */
-MemorySlot * BestFit::choose_slot(
-		MemorySlot * free_mem_list_head, 
-		unsigned int list_size, 
+MemoryAllocatedItem * BestFit::choose_slot(
+		MemoryAllocatedItem * free_mem_list_head[], 
 		unsigned int mem_size
 		)
 {
-	MemorySlot * bestfit = nullptr;
-	for(int i = 0; i < list_size; i++){
-		if(	free_mem_list_head[i].get_size() >= mem_size)
+	MemoryAllocatedItem * bestfit = nullptr;
+	for(int i = 0; free_mem_list_head[i] != nullptr; i++){
+		if(	free_mem_list_head[i]->getSizeBytes() >= mem_size)
 		{
 			if (bestfit == nullptr)
 			{
-				bestfit = &free_mem_list_head[i];
+				bestfit = free_mem_list_head[i];
 			}
-			else if(free_mem_list_head[i].get_size() < bestfit->get_size())
+			else if(free_mem_list_head[i]->getSizeBytes() < bestfit->getSizeBytes())
 			{
-				bestfit = &free_mem_list_head[i];
+				bestfit = free_mem_list_head[i];
 			}
 		}
 	}
@@ -48,18 +47,17 @@ MemorySlot * BestFit::choose_slot(
 
 /* First Fit Criterion class -----------------------------------------------------*/
 /**
- * @brief Walk through a MemorySlot list to the choosen the first fit
- * @param free_mem_list_head: Pointer to the first MemorySlot object
- * @returns Choosen MemorySlot
+ * @brief Walk through a MemoryAllocatedItem list to the choosen the first fit
+ * @param free_mem_list_head: Pointer to the first MemoryAllocatedItem object
+ * @returns Choosen MemoryAllocatedItem
 */
-MemorySlot * FirstFit::choose_slot(
-		MemorySlot * free_mem_list_head, 
-		unsigned int list_size, 
+MemoryAllocatedItem * FirstFit::choose_slot(
+		MemoryAllocatedItem ** free_mem_list_head,
 		unsigned int mem_size
 		)
 {
-	for(int i = 0; i < list_size; i++){
-		if(free_mem_list_head[i].get_size() >= mem_size) return &free_mem_list_head[i];
+	for(int i = 0; free_mem_list_head + i != nullptr; i++){
+		if(free_mem_list_head[i]->getSizeBytes() >= mem_size) return free_mem_list_head[i];
 	}
 	return nullptr;  // No available memory slot
 }

@@ -12,6 +12,7 @@ protected:
 
 public:
     // Construtor
+    AllocationMap(unsigned int memSize) : currentIndex(0) {}
     AllocationMap() : currentIndex(0) {}
 
     // Destrutor virtual
@@ -28,6 +29,8 @@ public:
 
     virtual MemoryAllocatedItem *allocate(unsigned int sizeBytes,unsigned int id, uint32_t  freeSpaceToAllocate) {return nullptr;};
 
+    virtual MemoryAllocatedItem **find_free_memory() {return nullptr;}
+
     // Getter para currentIndex
     unsigned int getCurrentIndex() const
     {
@@ -39,8 +42,6 @@ public:
     {
         currentIndex = index;
     }
-
-    virtual MemorySlot *find_free_memory() {return nullptr;}
 
     virtual void print(void) {};
 };

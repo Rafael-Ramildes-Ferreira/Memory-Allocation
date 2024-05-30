@@ -2,6 +2,7 @@
 #include "Node.h"
 #include "LinkedList.h"
 #include <cassert>
+#include <iostream>
 
 // template<typename T>
 // LinkedList<T>::LinkedList(){
@@ -47,12 +48,15 @@ void LinkedList<T>::insert(int index, T *item){
         for (int i = 0; i < index - 1; i++)
             aux = aux->next;
             
-        newNode->next = aux;
-        newNode->prev = aux->prev;
-        aux->prev->next = newNode;
-        aux->prev = newNode;
+        if(aux->next != nullptr){
+            newNode->next = aux->next;
+            aux->next->prev = newNode;
+        }
+
+        newNode->prev = aux;
+        aux->next = newNode;
             
-        size += 1;
+        this->size += 1;
     }
 }
 
@@ -69,6 +73,22 @@ int LinkedList<T>::find(int id){
     }
         
     assert(false);
+}
+
+template<typename T>
+int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool func(T*))
+{
+    Node<T> *node = this->first;
+    int index = 0;
+    while (node != nullptr)
+    {
+        if(func(node->item)) return index;
+        
+        node = node->next;
+        index++;
+    }
+    
+    return -1;
 }
 
 template<typename T>
@@ -94,13 +114,27 @@ T* LinkedList<T>::remove(int id){
 template<typename T>
 T* LinkedList<T>::get_item(unsigned int index)
 {
+    if(index >= this->size) return nullptr;
+
 	Node<T> *node = this->first;
 	unsigned int count = 0;
-	while(node != nullptr && count < index)
+	while(node != nullptr && count++ < index)
 	{
 		node = node->next;
 	}
 
 	if(node == nullptr) return nullptr;
 	else return node->item;
+}
+
+template<typename T>
+Node<T> *LinkedList<T>::get_first()
+{
+    return this->first;
+}
+
+template<typename T>
+Node<T> *LinkedList<T>::get_last()
+{
+    return this->last;
 }
