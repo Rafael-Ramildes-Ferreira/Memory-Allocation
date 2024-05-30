@@ -14,7 +14,6 @@ MemoryAllocatedItem * Criterion::choose_slot(
 		unsigned int mem_size
 		)
 {
-    std::cout << "Criterion::choose_slot" << std::endl;
 	return nullptr;
 }
 
@@ -29,13 +28,8 @@ MemoryAllocatedItem * BestFit::choose_slot(
 		unsigned int mem_size
 		)
 {
-    std::cout << "BestFit::choose_slot" << std::endl;
 	MemoryAllocatedItem * bestfit = nullptr;
 	for(int i = 0; free_mem_list_head[i] != nullptr; i++){
-    std::cout << "free_mem_list_head + i != nullptr: " << (free_mem_list_head + i != nullptr) << std::endl;
-    std::cout << "free_mem_list_head + i: " << (free_mem_list_head + i) << std::endl;
-    // std::cout << "*(free_mem_list_head + i): " << *(free_mem_list_head + i) << std::endl;
-    std::cout << "free_mem_list_head[i]: " << (free_mem_list_head[i]) << std::endl;
 		if(	free_mem_list_head[i]->getSizeBytes() >= mem_size)
 		{
 			if (bestfit == nullptr)
@@ -62,7 +56,6 @@ MemoryAllocatedItem * FirstFit::choose_slot(
 		unsigned int mem_size
 		)
 {
-    std::cout << "FirstFit::choose_slot" << std::endl;
 	for(int i = 0; free_mem_list_head + i != nullptr; i++){
 		if(free_mem_list_head[i]->getSizeBytes() >= mem_size) return free_mem_list_head[i];
 	}

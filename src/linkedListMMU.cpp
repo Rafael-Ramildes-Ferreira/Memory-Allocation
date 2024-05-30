@@ -22,28 +22,22 @@ MemoryAllocatedItem *LinkedListMMU::findNextFreeMemory()
 
 MemoryAllocatedItem *LinkedListMMU::allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate)
 {
-    std::cout << "Entrando em LinkedListMMU::allocateInFreeSpac" << std::endl;
-    std::cout << "1" << std::endl;
     // auto index = this->list->findBy(freeSpaceToAllocate->getId());
     // auto toBeFound = [freeSpaceToAllocate](MemoryAllocatedItem *item) -> bool {return item->getStartAddr() == freeSpaceToAllocate->getStartAddr();};
     auto toBeFound = [](MemoryAllocatedItem *free) -> std::function<bool(MemoryAllocatedItem *item)> {
         return [=](MemoryAllocatedItem *item) { return item->getStartAddr() == free->getStartAddr(); };
     };
-    // std::cout << "toBeFound(memoryToAllocate): " << toBeFound(freeSpaceToAllocate) << std::endl;
+
     auto index = this->list->findBy(toBeFound(freeSpaceToAllocate));
-    std::cout << "2" << std::endl;
     this->list->insert(index, memoryToAllocate);
 
-    std::cout << "3" << std::endl;
     if (memoryToAllocate->getSizeBytes() == freeSpaceToAllocate->getSizeBytes())
     {
-    std::cout << "4" << std::endl;
         this->list->remove(freeSpaceToAllocate->getId());
         return nullptr;
     }
     else
     {
-    std::cout << "5" << std::endl;
         freeSpaceToAllocate->setSizeBytes(freeSpaceToAllocate->getSizeBytes() - memoryToAllocate->getSizeBytes());
         // TODO Ver se está correto isso aqui
         freeSpaceToAllocate->setStartAddr(freeSpaceToAllocate->getStartAddr() + memoryToAllocate->getSizeBytes());
@@ -93,7 +87,6 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
 
 LinkedListMMU::LinkedListMMU(unsigned int memSize)
 {
-    std::cout << "Criando LinkedListMMU" << std::endl;
     this->list = new LinkedList<MemoryAllocatedItem>;
     MemoryAllocatedItem *emptyMemory = new MemoryAllocatedItem(0,false,0,memSize);
     this->list->addFirst(emptyMemory);
@@ -121,18 +114,14 @@ MemoryAllocatedItem **LinkedListMMU::find_free_memory(void)
     for(int i = 0; i < this->list->size; i++)
     {
         MemoryAllocatedItem *mem_slot = this->list->get_item(i);
-        std::cout << "(mem_slot == nullptr): " << (mem_slot == nullptr) << std::endl;
         if(mem_slot != nullptr){
             if(!mem_slot->getAllocatedMemory()){
-        std::cout << "free_memory_list == nullptr: " << (free_memory_list == nullptr) << std::endl;
                 this->free_memory_list[index] = mem_slot;
                 index++;
-        std::cout << "free_memory_list == nullptr: " << (free_memory_list == nullptr) << std::endl;
             }
         }
     }
 
-    std::cout << "returned free_memory_list == nullptr: " << (free_memory_list == nullptr) << std::endl;
     return this->free_memory_list;
 }
 

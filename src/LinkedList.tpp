@@ -35,18 +35,15 @@ void LinkedList<T>::addFirst(T *item){
 
 template<typename T>
 void LinkedList<T>::insert(int index, T *item){
-    std::cout << "Entrando em LinkedList<T>::insert" << std::endl;
 	assert(!(index < 0 || index >= this->size));
         	
         
     Node<T> *newNode = new Node(item);
-    std::cout << "(newNode == nullptr): " << (newNode == nullptr) << std::endl;
         
     if (index == 0) {
         this->addFirst(item);
     }  else {
         Node<T> *aux = this->first;
-        std::cout << "(aux == nullptr): " << (aux == nullptr) << std::endl;
             
         for (int i = 0; i < index - 1; i++)
             aux = aux->next;
@@ -55,7 +52,7 @@ void LinkedList<T>::insert(int index, T *item){
             newNode->next = aux->next;
             aux->next->prev = newNode;
         }
-        
+
         newNode->prev = aux;
         aux->next = newNode;
             

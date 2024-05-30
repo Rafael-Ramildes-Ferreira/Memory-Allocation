@@ -46,21 +46,17 @@ void Feed::read()
 			unsigned int size, id;
 			while (file >> command)
 			{	
-				std::cout << "Entrou no while" << std::endl;
 				switch(command)
 				{
 					case 'A':
-						std::cout << "Entrou no A" << std::endl;
 						file >> size >> id;
 						mmu->allocate(size,id);
 						break;
 					case 'D':
-						std::cout << "Entrou no D" << std::endl;
 						file >> id;
 						mmu->deallocate(id);
 						break;
 					default:
-						std::cout << "Erro: Comando desconhacido" << std::endl;
 						mmu->printMemory();
 						return;
 				}
@@ -82,21 +78,17 @@ void Feed::read()
 			unsigned int size, id;
 			while (file >> command)
 			{	
-				std::cout << "Entrou no while" << std::endl;
 				switch(command)
 				{
 					case 'A':
-						std::cout << "Entrou no A" << std::endl;
 						file >> size >> id;
 						mmu->allocate(size,id);
 						break;
 					case 'D':
-						std::cout << "Entrou no D" << std::endl;
 						file >> id;
 						mmu->deallocate(id);
 						break;
 					default:
-						std::cout << "Erro: Comando desconhacido" << std::endl;
 						mmu->printMemory();
 						return;
 				}
