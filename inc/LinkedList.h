@@ -2,6 +2,7 @@
 #define _LINKEDLIST_CLASS_H
 #include "Node.h"
 #include <cstdint>
+#include <functional>
 
 template<typename T>
 class LinkedList {
@@ -20,6 +21,7 @@ class LinkedList {
 		void addFirst(T *item);
 		void insert(int index, T *item);
 		int find(int id);
+		int findBy(std::function<bool(MemoryAllocatedItem*)> func);//bool func(T*));
 		T* remove(int id);
 		T* get_item(unsigned int index);
 		Node<T> *get_first();

@@ -2,6 +2,7 @@
 #include "Node.h"
 #include "LinkedList.h"
 #include <cassert>
+#include <iostream>
 
 // template<typename T>
 // LinkedList<T>::LinkedList(){
@@ -34,25 +35,31 @@ void LinkedList<T>::addFirst(T *item){
 
 template<typename T>
 void LinkedList<T>::insert(int index, T *item){
+    std::cout << "Entrando em LinkedList<T>::insert" << std::endl;
 	assert(!(index < 0 || index >= this->size));
         	
         
     Node<T> *newNode = new Node(item);
+    std::cout << "(newNode == nullptr): " << (newNode == nullptr) << std::endl;
         
     if (index == 0) {
         this->addFirst(item);
     }  else {
         Node<T> *aux = this->first;
+        std::cout << "(aux == nullptr): " << (aux == nullptr) << std::endl;
             
         for (int i = 0; i < index - 1; i++)
             aux = aux->next;
             
-        newNode->next = aux;
-        newNode->prev = aux->prev;
-        aux->prev->next = newNode;
-        aux->prev = newNode;
+        if(aux->next != nullptr){
+            newNode->next = aux->next;
+            aux->next->prev = newNode;
+        }
+        
+        newNode->prev = aux;
+        aux->next = newNode;
             
-        size += 1;
+        this->size += 1;
     }
 }
 
@@ -69,6 +76,22 @@ int LinkedList<T>::find(int id){
     }
         
     assert(false);
+}
+
+template<typename T>
+int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool func(T*))
+{
+    Node<T> *node = this->first;
+    int index = 0;
+    while (node != nullptr)
+    {
+        if(func(node->item)) return index;
+        
+        node = node->next;
+        index++;
+    }
+    
+    return -1;
 }
 
 template<typename T>
