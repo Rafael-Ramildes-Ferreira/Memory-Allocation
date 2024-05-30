@@ -114,9 +114,11 @@ T* LinkedList<T>::remove(int id){
 template<typename T>
 T* LinkedList<T>::get_item(unsigned int index)
 {
+    if(index >= this->size) return nullptr;
+
 	Node<T> *node = this->first;
 	unsigned int count = 0;
-	while(node != nullptr && count < index)
+	while(node != nullptr && count++ < index)
 	{
 		node = node->next;
 	}
