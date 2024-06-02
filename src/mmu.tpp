@@ -1,11 +1,16 @@
 #include "mmu.hpp"
 #include "memoryAllocatedItem.hpp"
 #include "MemorySlot.h"
+#include "unit_test.h"
+#include <cassert>
 #include <iostream>
 
 template<typename T>
 MMU<T>::MMU(unsigned int minBlock, allocation_algorithm algorithm, AllocationMap *allocationMap)
 {
+    // Tests if the chosen criterion has choose_slot method
+	static_assert(has_choose_slot<T>::value);
+
     // TODO Verificar se o minBlock usa no método de LinkedList, pois não estou usando...
     this->minBlock = minBlock;
     this->algorithm = algorithm;

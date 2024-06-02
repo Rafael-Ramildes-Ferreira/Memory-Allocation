@@ -37,7 +37,7 @@ void Feed::read()
 	case BEST_FIT:
 		{
 			std::cout << "Best Fit:" << std::endl;
-			MMU<BestFit> *mmu = new MMU<BestFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
+			auto mmu = new MMU<BestFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
 			// mmu = (MMU<Criterion>*) aux;
 
 			assert(mmu != nullptr);
@@ -73,7 +73,7 @@ void Feed::read()
 	case FIRST_FIT:
 		{
 			std::cout << "First Fit:" << std::endl;
-			MMU<FirstFit> *mmu = new MMU<FirstFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
+			auto mmu = new MMU<FirstFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
 			// mmu = (MMU<Criterion>*) aux;
 
 			assert(mmu != nullptr);
