@@ -61,21 +61,6 @@ void LinkedList<T>::insert(int index, T *item){
 }
 
 template<typename T>
-int LinkedList<T>::find(int id){
-		
-    Node<T> *aux = this->first;
-      
-    for (int i = 0; i < this->size; i++){
-    	if(aux->item->getId() == id){
-    		return i;
-    	}
-    	aux = aux->next;
-    }
-        
-    assert(false);
-}
-
-template<typename T>
 int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool func(T*))
 {
     Node<T> *node = this->first;
