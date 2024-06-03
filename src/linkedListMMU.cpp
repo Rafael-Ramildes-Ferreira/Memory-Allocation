@@ -33,7 +33,7 @@ MemoryAllocatedItem *LinkedListMMU::allocateInFreeSpace(MemoryAllocatedItem *mem
 
     if (memoryToAllocate->getSizeBytes() == freeSpaceToAllocate->getSizeBytes())
     {
-        this->list->remove(freeSpaceToAllocate->getId());
+        this->list->remove(index+1);
         return nullptr;
     }
     else
@@ -63,7 +63,7 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
                 {
                     totalMemoryFree += before->getSizeBytes();
                     startAddr = before->getStartAddr();
-                    this->list->remove(this->list->get_item(i - 1)->getId());
+                    this->list->remove(i - 1);
                     fixedIndex--;
                 }
             }
@@ -73,7 +73,7 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
                 if (!after->getAllocatedMemory())
                 {
                     totalMemoryFree += after->getSizeBytes();
-                    this->list->remove(this->list->get_item(fixedIndex + 1)->getId());
+                    this->list->remove(fixedIndex + 1);
                 }
             }
             memoryAllocatedItem->setAllocatedMemory(false);

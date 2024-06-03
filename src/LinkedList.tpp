@@ -61,21 +61,6 @@ void LinkedList<T>::insert(int index, T *item){
 }
 
 template<typename T>
-int LinkedList<T>::find(int id){
-		
-    Node<T> *aux = this->first;
-      
-    for (int i = 0; i < this->size; i++){
-    	if(aux->item->getId() == id){
-    		return i;
-    	}
-    	aux = aux->next;
-    }
-        
-    assert(false);
-}
-
-template<typename T>
 int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool func(T*))
 {
     Node<T> *node = this->first;
@@ -92,23 +77,26 @@ int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool 
 }
 
 template<typename T>
-T* LinkedList<T>::remove(int id){
+int LinkedList<T>::remove(unsigned int index){
+
+    if(index >= this->size) return -1;
 
     Node<T> *aux = this->first;
    
-    for (int i = 0; i < this->size; i++){
-    	if(aux->item->getId() == id){
-    		aux->prev->next = aux->next;
-            aux->next->prev = aux->prev;
-            size -= 1;
-            T *mem_allocated = aux->item;
-            delete aux; // Should not delete the item but only the Node structure
-    		return mem_allocated;
-    	}
+    // Seek
+    for (int i = 0; i < index; i++){
     	aux = aux->next;
     }
-    
-    assert(false);
+
+    // 'n Destroy
+    aux->prev->next = aux->next;
+    if(aux->next != nullptr){
+        aux->next->prev = aux->prev;
+    } else {
+        this->last = aux->prev;
+    }
+
+    return 0;
 }
 
 template<typename T>
