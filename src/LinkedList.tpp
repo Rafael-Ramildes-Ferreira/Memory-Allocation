@@ -4,13 +4,6 @@
 #include <cassert>
 #include <iostream>
 
-// template<typename T>
-// LinkedList<T>::LinkedList(){
-
-//     this->first = nullptr;
-//     this->last = nullptr;
-//     this->size = 0;
-// }
 
 template<typename T>
 bool LinkedList<T>::isEmpty(){
@@ -39,29 +32,27 @@ void LinkedList<T>::insert(int index, T *item){
         	
         
     Node<T> *newNode = new Node(item);
-        
-    if (index == 0) {
-        this->addFirst(item);
-    }  else {
-        Node<T> *aux = this->first;
-            
-        for (int i = 0; i < index - 1; i++)
-            aux = aux->next;
-            
-        if(aux->next != nullptr){
-            newNode->next = aux->next;
-            aux->next->prev = newNode;
-        }
+    Node<T> *aux = this->get_node(index);
 
-        newNode->prev = aux;
-        aux->next = newNode;
-            
-        this->size += 1;
+    if(aux == nullptr) {
+        return;
     }
+        
+    if(aux->prev != nullptr){
+        aux->prev->next = newNode;
+    } else {
+        this->first = newNode;
+    }
+
+    newNode->prev = aux->prev;
+    newNode->next = aux;
+    aux->prev = newNode;
+        
+    this->size += 1;
 }
 
 template<typename T>
-int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool func(T*))
+int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)
 {
     Node<T> *node = this->first;
     int index = 0;
@@ -77,23 +68,18 @@ int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool 
 }
 
 template<typename T>
-int LinkedList<T>::remove(unsigned int index){
-
-    if(index >= this->size) return -1;
-
-    Node<T> *aux = this->first;
-   
+int LinkedList<T>::remove(unsigned int index)
+{  
     // Seek
-    for (int i = 0; i < index; i++){
-    	aux = aux->next;
-    }
+    Node<T> *node = this->get_node(index);
+    if(node == nullptr) return -1;
 
     // 'n Destroy
-    aux->prev->next = aux->next;
-    if(aux->next != nullptr){
-        aux->next->prev = aux->prev;
+    node->prev->next = node->next;
+    if(node->next != nullptr){
+        node->next->prev = node->prev;
     } else {
-        this->last = aux->prev;
+        this->last = node->prev;
     }
 
     return 0;
@@ -102,17 +88,10 @@ int LinkedList<T>::remove(unsigned int index){
 template<typename T>
 T* LinkedList<T>::get_item(unsigned int index)
 {
-    if(index >= this->size) return nullptr;
-
-	Node<T> *node = this->first;
-	unsigned int count = 0;
-	while(node != nullptr && count++ < index)
-	{
-		node = node->next;
-	}
-
-	if(node == nullptr) return nullptr;
-	else return node->item;
+    Node<T> *node = this->get_node(index);
+    
+    if(node == nullptr) return nullptr;
+    else return node->item;
 }
 
 template<typename T>
@@ -125,4 +104,19 @@ template<typename T>
 Node<T> *LinkedList<T>::get_last()
 {
     return this->last;
+}
+
+template<typename T>
+Node<T> *LinkedList<T>::get_node(unsigned int index)
+{
+    if(index >= this->size) return nullptr;
+
+	Node<T> *node = this->first;
+	unsigned int count = 0;
+	while(node != nullptr && count++ < index)
+	{
+		node = node->next;
+	}
+
+	return node;
 }

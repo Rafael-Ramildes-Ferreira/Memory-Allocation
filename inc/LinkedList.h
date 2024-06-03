@@ -8,6 +8,8 @@ template<typename T>
 class LinkedList {
 	private:				
 		Node<T> *first, *last;
+
+		Node<T> *get_node(unsigned int index);
 	public:
 		int size;
 
