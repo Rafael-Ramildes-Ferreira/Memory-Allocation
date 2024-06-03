@@ -77,27 +77,7 @@ int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool 
 }
 
 template<typename T>
-T* LinkedList<T>::remove(int id){
-
-    Node<T> *aux = this->first;
-   
-    for (int i = 0; i < this->size; i++){
-    	if(aux->item->getId() == id){
-    		aux->prev->next = aux->next;
-            aux->next->prev = aux->prev;
-            size -= 1;
-            T *mem_allocated = aux->item;
-            delete aux; // Should not delete the item but only the Node structure
-    		return mem_allocated;
-    	}
-    	aux = aux->next;
-    }
-    
-    assert(false);
-}
-
-template<typename T>
-int LinkedList<T>::remove2(int index){
+int LinkedList<T>::remove(unsigned int index){
 
     if(index >= this->size) return -1;
 
