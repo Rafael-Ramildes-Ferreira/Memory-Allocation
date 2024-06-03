@@ -22,6 +22,7 @@ class LinkedList {
 		void insert(int index, T *item);
 		int findBy(std::function<bool(MemoryAllocatedItem*)> func);//bool func(T*));
 		T* remove(int id);
+		int remove2(int index);
 		T* get_item(unsigned int index);
 		Node<T> *get_first();
 		Node<T> *get_last();

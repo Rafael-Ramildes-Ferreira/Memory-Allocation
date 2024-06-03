@@ -97,6 +97,29 @@ T* LinkedList<T>::remove(int id){
 }
 
 template<typename T>
+int LinkedList<T>::remove2(int index){
+
+    if(index >= this->size) return -1;
+
+    Node<T> *aux = this->first;
+   
+    // Seek
+    for (int i = 0; i < index; i++){
+    	aux = aux->next;
+    }
+
+    // 'n Destroy
+    aux->prev->next = aux->next;
+    if(aux->next != nullptr){
+        aux->next->prev = aux->prev;
+    } else {
+        this->last = aux->prev;
+    }
+
+    return 0;
+}
+
+template<typename T>
 T* LinkedList<T>::get_item(unsigned int index)
 {
     if(index >= this->size) return nullptr;
