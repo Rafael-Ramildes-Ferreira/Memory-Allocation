@@ -62,13 +62,14 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
         return false;
     }
 
-    MemoryAllocatedItem *freeSpaceToAllocate = criterion.choose_slot(mem_slot_list,sizeBytes);
+    unsigned int sizeToAllocate = sizeBytes-sizeBytes%this->minBlock + (sizeBytes%this->minBlock!=0)*this->minBlock;
+    MemoryAllocatedItem *freeSpaceToAllocate = criterion.choose_slot(mem_slot_list,sizeToAllocate);
     if(freeSpaceToAllocate == nullptr){
         // No slot large enough
         return false;
     }
 
-    MemoryAllocatedItem *memoryToAllocate = new MemoryAllocatedItem(id,1,freeSpaceToAllocate->getStartAddr(), sizeBytes);
+    MemoryAllocatedItem *memoryToAllocate = new MemoryAllocatedItem(id,1,freeSpaceToAllocate->getStartAddr(), sizeToAllocate);
     this->allocationMap->allocateInFreeSpace(memoryToAllocate, freeSpaceToAllocate);
     return true;
 
