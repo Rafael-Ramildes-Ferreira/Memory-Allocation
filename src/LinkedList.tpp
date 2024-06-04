@@ -37,34 +37,22 @@ void LinkedList<T>::insert(int index, T *item){
     if(aux == nullptr) {
         return;
     }
-        
+      
+    newNode->next = aux;
+    newNode->prev = aux->prev;  
     if(aux->prev != nullptr){
         aux->prev->next = newNode;
     } else {
         this->first = newNode;
     }
 
-    newNode->prev = aux->prev;
-    newNode->next = aux;
     aux->prev = newNode;
+
+    // Caches new node
+    this->cachedNode = newNode;
+    this->cachedIndex = index;
         
     this->size += 1;
-}
-
-template<typename T>
-int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)
-{
-    Node<T> *node = this->first;
-    int index = 0;
-    while (node != nullptr)
-    {
-        if(func(node->item)) return index;
-        
-        node = node->next;
-        index++;
-    }
-    
-    return -1;
 }
 
 template<typename T>
@@ -82,7 +70,33 @@ int LinkedList<T>::remove(unsigned int index)
         this->last = node->prev;
     }
 
+    // Caches changes
+    if(index == this->cachedIndex){
+        // If cached node is removed, just cache next node
+        this->cachedNode = this->cachedNode->next;
+    } else if(index < this->cachedIndex){
+        // If any node prior to the cached is removed, updates the cache index,
+        // since from that point on all indexes will decrement
+        this->cachedIndex--;
+    }
+
     return 0;
+}
+
+template<typename T>
+int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)
+{
+    Node<T> *node = this->first;
+    int index = 0;
+    while (node != nullptr)
+    {
+        if(func(node->item)) return index;
+        
+        node = node->next;
+        index++;
+    }
+    
+    return -1;
 }
 
 template<typename T>
@@ -109,14 +123,35 @@ Node<T> *LinkedList<T>::get_last()
 template<typename T>
 Node<T> *LinkedList<T>::get_node(unsigned int index)
 {
+    // Checks boundaries
     if(index >= this->size) return nullptr;
 
-	Node<T> *node = this->first;
-	unsigned int count = 0;
-	while(node != nullptr && count++ < index)
-	{
-		node = node->next;
-	}
+    // Check if requested is imediately accessible
+    if(index == 0) return this->first;
+    if(index == this->size) return this->last;
+    if(index == this->cachedIndex) return this->cachedNode;
 
+    Node<T> *node;
+    unsigned int count;
+
+    if(index < (this->size - index))
+    {
+        std::cout << "Vindo pelo começo" << std::endl;
+        node = this->first;
+        count = 0;
+        while(node != nullptr && count++ < index)
+        {
+            node = node->next;
+        }
+    } else {
+        std::cout << "Vindo pelo final" << std::endl;
+        node = this->last;
+        count = this->size - 1;
+        while(node != nullptr && count-- > index)
+        {
+            node = node->prev;
+        }
+    }
+    
 	return node;
 }
