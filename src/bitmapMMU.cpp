@@ -21,7 +21,7 @@ BitmapMMU::BitmapMMU(LinkedList<MemoryAllocatedItem> *list, bool *bitmap)
 
 MemoryAllocatedItem *BitmapMMU::findNextFreeMemory()
 {
-    unsigned int bitmapSize = sizeof(this->bitmap) / sizeof(*this->bitmap);
+    auto bitmapSize = this->memSize / this->minBlockSize;
     auto index = currentIndex;
     auto totalFree = 0;
     auto searching = -1;
