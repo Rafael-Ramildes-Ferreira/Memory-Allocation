@@ -58,20 +58,25 @@ MemoryAllocatedItem *BitmapMMU::findNextFreeMemory()
 
 MemoryAllocatedItem **BitmapMMU::find_free_memory(void)
 {
-    auto free_memory_list = new MemoryAllocatedItem *[this->memSize / this->minBlockSize / 2];
+    auto freeMemoryList = new MemoryAllocatedItem *[this->memSize / this->minBlockSize / 2];
     auto cont = 0;
+    auto firstFreeMemory = this->findNextFreeMemory();
+    if (firstFreeMemory == nullptr)
+    {
+        return freeMemoryList;
+    }
     while (true)
     {
         auto emptySpace = this->findNextFreeMemory();
-        if (emptySpace == nullptr)
+        if (emptySpace == nullptr || emptySpace->getStartAddr() == firstFreeMemory->getStartAddr())
         {
-            return free_memory_list;
+            return freeMemoryList;
         }
         else
         {
-            free_memory_list[cont] = emptySpace;
+            freeMemoryList[cont] = emptySpace;
+            cont++;
         }
-        cont++;
     }
 }
 
