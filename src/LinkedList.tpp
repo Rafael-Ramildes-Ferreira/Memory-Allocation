@@ -23,6 +23,10 @@ void LinkedList<T>::addFirst(T *item){
 			this->first = newNode;
     }
 	
+    // Caches new node
+    this->cachedNode = newNode;
+    this->cachedIndex = 0;
+
     size += 1;
 }
 
@@ -134,19 +138,37 @@ Node<T> *LinkedList<T>::get_node(unsigned int index)
     Node<T> *node;
     unsigned int count;
 
-    if(index < (this->size - index))
+    unsigned int distCached = (cachedIndex > index)?cachedIndex-index:index-cachedIndex;
+    
+    // Tests if it should go up or down (first case is up)
+    if((2*index < this->size && index < distCached) || (index > distCached && cachedIndex < index)) 
     {
-        std::cout << "Vindo pelo começo" << std::endl;
-        node = this->first;
-        count = 0;
+        // Setup variables
+        if(index <= distCached){
+            node = this->first;
+            count = 0;
+        } else {
+            node = this->cachedNode;
+            count = this->cachedIndex;
+        }
+
+        // Find
         while(node != nullptr && count++ < index)
         {
             node = node->next;
         }
-    } else {
-        std::cout << "Vindo pelo final" << std::endl;
-        node = this->last;
-        count = this->size - 1;
+
+    } else{
+        // Setup variables
+        if((this->size - index) <= distCached){
+            node = this->last;
+            count = this->size - 1;
+        } else {
+            node = this->cachedNode;
+            count = this->cachedIndex;
+        }
+
+        // Find
         while(node != nullptr && count-- > index)
         {
             node = node->prev;
