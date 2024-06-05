@@ -55,7 +55,7 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
         // No slot large enough
         return false;
     }
-
+    
     MemoryAllocatedItem *memoryToAllocate = new MemoryAllocatedItem(id,1,freeSpaceToAllocate->getStartAddr(), sizeToAllocate);
     this->allocationMap->allocateInFreeSpace(memoryToAllocate, freeSpaceToAllocate);
     return true;

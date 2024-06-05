@@ -5,8 +5,11 @@
 
 BitmapMMU::BitmapMMU(unsigned int memSize, unsigned int minBlockSize)
 {
+    this->memSize = memSize;
+    this->minBlockSize = minBlockSize;
+
     this->list = new LinkedList<MemoryAllocatedItem>;
-    this->bitmap = new bool[this->memSize / this->minBlockSize];
+    this->bitmap = new bool[(unsigned int) (this->memSize / this->minBlockSize)];
     for (int i = 0; i < this->memSize / this->minBlockSize; i++)
     {
         this->bitmap[i] = false;
