@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Criterion.h"
 #include "linkedListMMU.hpp"
+#include "bitmapMMU.hpp"
 
 
 enum manegment_algorithm {MA_INVALID, BIT_MAP, LINKED_LIST};
@@ -28,17 +29,31 @@ void Feed::read()
 	assert(file.is_open());
 
 	// Reads configurations
-	unsigned int man_alg, men_size, smallest_block, alloc_alg;
-	file >> man_alg >> men_size >> smallest_block >> alloc_alg;
-	LinkedListMMU teste(men_size);
-	// MMU<Criterion> *mmu = nullptr;
+	unsigned int man_alg, mem_size, smallest_block, alloc_alg;
+	file >> man_alg >> mem_size >> smallest_block >> alloc_alg;
+	
+	AllocationMap *memMap;
+	switch(man_alg)
+	{
+		case BIT_MAP:
+			memMap = (AllocationMap*) new BitmapMMU(mem_size,smallest_block);
+			break;
+		case LINKED_LIST:
+			memMap = (AllocationMap*) new LinkedListMMU(mem_size);
+			break;
+		case MA_INVALID:
+			std::cout << "0 in first line of " << this->path << " is invalid" << std::endl;
+		default:
+			std::cout << "Failed to initialize memory map" << std::endl;
+			return;
+	}
+	
 	switch (alloc_alg)
 	{
 	case BEST_FIT:
 		{
 			std::cout << "Best Fit:" << std::endl;
-			auto mmu = new MMU<BestFit>(smallest_block,&teste);
-			// mmu = (MMU<Criterion>*) aux;
+			auto mmu = new MMU<BestFit>(smallest_block,memMap);
 
 			assert(mmu != nullptr);
 
@@ -73,8 +88,7 @@ void Feed::read()
 	case FIRST_FIT:
 		{
 			std::cout << "First Fit:" << std::endl;
-			auto mmu = new MMU<FirstFit>(smallest_block,&teste);
-			// mmu = (MMU<Criterion>*) aux;
+			auto mmu = new MMU<FirstFit>(smallest_block,memMap);
 
 			assert(mmu != nullptr);
 

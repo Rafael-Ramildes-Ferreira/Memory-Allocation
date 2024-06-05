@@ -1,5 +1,5 @@
-#ifndef __LINKED_LIST_MMU_H
-#define __LINKED_LIST_MMU_H
+#ifndef __BITMAP_MMU_H
+#define __BITMAP_MMU_H
 
 #include "LinkedList.h"
 #include "memoryAllocatedItem.hpp"
