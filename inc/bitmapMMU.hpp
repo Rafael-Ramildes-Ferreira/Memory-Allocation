@@ -1,23 +1,20 @@
-#ifndef __LINKED_LIST_MMU_H
-#define __LINKED_LIST_MMU_H
+#ifndef __BITMAP_MMU_H
+#define __BITMAP_MMU_H
 
 #include "LinkedList.h"
 #include "memoryAllocatedItem.hpp"
 #include "allocationMap.hpp"
 
-
-#define MAXIMUM_FREE_SLOTS 1000
-
-class LinkedListMMU : public AllocationMap
+class BitmapMMU : public AllocationMap
 {
 private:
     LinkedList<MemoryAllocatedItem> *list;
-
-	MemoryAllocatedItem *free_memory_list[MAXIMUM_FREE_SLOTS];
+    unsigned int memSize, minBlockSize;
+    bool *bitmap;
 
 public:
-    LinkedListMMU(unsigned int memSize);
-    LinkedListMMU(LinkedList<MemoryAllocatedItem> *list);
+    BitmapMMU(unsigned int memSize, unsigned int minBlockSize);
+    BitmapMMU(LinkedList<MemoryAllocatedItem> *list, bool *bitmap);
 
     MemoryAllocatedItem *findNextFreeMemory() override;
     MemoryAllocatedItem *allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate) override;
@@ -26,6 +23,9 @@ public:
 
     LinkedList<MemoryAllocatedItem> *getList();
     void setList(LinkedList<MemoryAllocatedItem> *list);
+
+    // bool *getBitmap();
+    // void setBitmap(bool *bitmap);
 
     void print(void) override;
 };

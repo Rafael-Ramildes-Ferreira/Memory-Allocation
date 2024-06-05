@@ -4,13 +4,6 @@
 #include <cassert>
 #include <iostream>
 
-// template<typename T>
-// LinkedList<T>::LinkedList(){
-
-//     this->first = nullptr;
-//     this->last = nullptr;
-//     this->size = 0;
-// }
 
 template<typename T>
 bool LinkedList<T>::isEmpty(){
@@ -30,6 +23,10 @@ void LinkedList<T>::addFirst(T *item){
 			this->first = newNode;
     }
 	
+    // Caches new node
+    this->cachedNode = newNode;
+    this->cachedIndex = 0;
+
     size += 1;
 }
 
@@ -39,44 +36,59 @@ void LinkedList<T>::insert(int index, T *item){
         	
         
     Node<T> *newNode = new Node(item);
-        
-    if (index == 0) {
-        this->addFirst(item);
-    }  else {
-        Node<T> *aux = this->first;
-            
-        for (int i = 0; i < index - 1; i++)
-            aux = aux->next;
-            
-        if(aux->next != nullptr){
-            newNode->next = aux->next;
-            aux->next->prev = newNode;
-        }
+    Node<T> *aux = this->get_node(index);
 
-        newNode->prev = aux;
-        aux->next = newNode;
-            
-        this->size += 1;
+    if(aux == nullptr) {
+        return;
     }
-}
-
-template<typename T>
-int LinkedList<T>::find(int id){
-		
-    Node<T> *aux = this->first;
       
-    for (int i = 0; i < this->size; i++){
-    	if(aux->item->getId() == id){
-    		return i;
-    	}
-    	aux = aux->next;
+    newNode->next = aux;
+    newNode->prev = aux->prev;  
+    if(aux->prev != nullptr){
+        aux->prev->next = newNode;
+    } else {
+        this->first = newNode;
     }
+
+    aux->prev = newNode;
+
+    // Caches new node
+    this->cachedNode = newNode;
+    this->cachedIndex = index;
         
-    assert(false);
+    this->size += 1;
 }
 
 template<typename T>
-int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool func(T*))
+T *LinkedList<T>::remove(unsigned int index)
+{  
+    // Seek
+    Node<T> *node = this->get_node(index);
+    if(node == nullptr) return nullptr;
+
+    // 'n Destroy
+    node->prev->next = node->next;
+    if(node->next != nullptr){
+        node->next->prev = node->prev;
+    } else {
+        this->last = node->prev;
+    }
+
+    // Caches changes
+    if(index == this->cachedIndex){
+        // If cached node is removed, just cache next node
+        this->cachedNode = this->cachedNode->next;
+    } else if(index < this->cachedIndex){
+        // If any node prior to the cached is removed, updates the cache index,
+        // since from that point on all indexes will decrement
+        this->cachedIndex--;
+    }
+
+    return node->item;
+}
+
+template<typename T>
+int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)
 {
     Node<T> *node = this->first;
     int index = 0;
@@ -92,39 +104,12 @@ int LinkedList<T>::findBy(std::function<bool(MemoryAllocatedItem*)> func)//bool 
 }
 
 template<typename T>
-T* LinkedList<T>::remove(int id){
-
-    Node<T> *aux = this->first;
-   
-    for (int i = 0; i < this->size; i++){
-    	if(aux->item->getId() == id){
-    		aux->prev->next = aux->next;
-            aux->next->prev = aux->prev;
-            size -= 1;
-            T *mem_allocated = aux->item;
-            delete aux; // Should not delete the item but only the Node structure
-    		return mem_allocated;
-    	}
-    	aux = aux->next;
-    }
-    
-    assert(false);
-}
-
-template<typename T>
 T* LinkedList<T>::get_item(unsigned int index)
 {
-    if(index >= this->size) return nullptr;
-
-	Node<T> *node = this->first;
-	unsigned int count = 0;
-	while(node != nullptr && count++ < index)
-	{
-		node = node->next;
-	}
-
-	if(node == nullptr) return nullptr;
-	else return node->item;
+    Node<T> *node = this->get_node(index);
+    
+    if(node == nullptr) return nullptr;
+    else return node->item;
 }
 
 template<typename T>
@@ -137,4 +122,58 @@ template<typename T>
 Node<T> *LinkedList<T>::get_last()
 {
     return this->last;
+}
+
+template<typename T>
+Node<T> *LinkedList<T>::get_node(unsigned int index)
+{
+    // Checks boundaries
+    if(index >= this->size) return nullptr;
+
+    // Check if requested is imediately accessible
+    if(index == 0) return this->first;
+    if(index == this->size) return this->last;
+    if(index == this->cachedIndex) return this->cachedNode;
+
+    Node<T> *node;
+    unsigned int count;
+
+    unsigned int distCached = (cachedIndex > index)?cachedIndex-index:index-cachedIndex;
+    
+    // Tests if it should go up or down (first case is up)
+    if((2*index < this->size && index <= distCached) || (index > distCached && cachedIndex < index)) 
+    {
+        // Setup variables
+        if(index <= distCached){
+            node = this->first;
+            count = 0;
+        } else {
+            node = this->cachedNode;
+            count = this->cachedIndex;
+        }
+
+        // Find
+        while(node != nullptr && count++ < index)
+        {
+            node = node->next;
+        }
+
+    } else{
+        // Setup variables
+        if((this->size - index) <= distCached){
+            node = this->last;
+            count = this->size - 1;
+        } else {
+            node = this->cachedNode;
+            count = this->cachedIndex;
+        }
+
+        // Find
+        while(node != nullptr && count-- > index)
+        {
+            node = node->prev;
+        }
+    }
+    
+	return node;
 }
