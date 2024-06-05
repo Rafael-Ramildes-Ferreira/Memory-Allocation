@@ -93,7 +93,12 @@ MemoryAllocatedItem *BitmapMMU::allocateInFreeSpace(MemoryAllocatedItem *memoryT
 
 MemoryAllocatedItem *BitmapMMU::deallocate(unsigned int id)
 {
-    auto memoryToDeallocate = this->list->remove(id);
+    auto toBeFound = [](int id) -> std::function<bool(MemoryAllocatedItem*)> {
+        return [=](MemoryAllocatedItem *item) { return id == item->getId(); };
+    };
+
+    auto index = this->list->findBy(toBeFound(id));
+    auto memoryToDeallocate = this->list->remove(index);
     if (memoryToDeallocate == nullptr)
     {
         return nullptr;

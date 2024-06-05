@@ -60,11 +60,11 @@ void LinkedList<T>::insert(int index, T *item){
 }
 
 template<typename T>
-int LinkedList<T>::remove(unsigned int index)
+T *LinkedList<T>::remove(unsigned int index)
 {  
     // Seek
     Node<T> *node = this->get_node(index);
-    if(node == nullptr) return -1;
+    if(node == nullptr) return nullptr;
 
     // 'n Destroy
     node->prev->next = node->next;
@@ -84,7 +84,7 @@ int LinkedList<T>::remove(unsigned int index)
         this->cachedIndex--;
     }
 
-    return 0;
+    return node->item;
 }
 
 template<typename T>

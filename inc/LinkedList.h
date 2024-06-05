@@ -24,7 +24,7 @@ class LinkedList {
 		bool isEmpty();
 		void addFirst(T *item);
 		void insert(int index, T *item);
-		int remove(unsigned int index);
+		T *remove(unsigned int index);
 		int findBy(std::function<bool(MemoryAllocatedItem*)> func);
 		T* get_item(unsigned int index);
 		Node<T> *get_first();

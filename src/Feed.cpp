@@ -6,7 +6,7 @@
 
 
 enum manegment_algorithm {MA_INVALID, BIT_MAP, LINKED_LIST};
-// enum allocation_algorithm {AA_INVALID, BEST_FIT, FIRST_FIT};
+enum allocation_algorithm {AA_INVALID, BEST_FIT, FIRST_FIT};
 
 
 Feed::Feed(std::string path)
@@ -37,7 +37,7 @@ void Feed::read()
 	case BEST_FIT:
 		{
 			std::cout << "Best Fit:" << std::endl;
-			auto mmu = new MMU<BestFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
+			auto mmu = new MMU<BestFit>(smallest_block,&teste);
 			// mmu = (MMU<Criterion>*) aux;
 
 			assert(mmu != nullptr);
@@ -73,7 +73,7 @@ void Feed::read()
 	case FIRST_FIT:
 		{
 			std::cout << "First Fit:" << std::endl;
-			auto mmu = new MMU<FirstFit>(smallest_block,(allocation_algorithm)alloc_alg,&teste);
+			auto mmu = new MMU<FirstFit>(smallest_block,&teste);
 			// mmu = (MMU<Criterion>*) aux;
 
 			assert(mmu != nullptr);
