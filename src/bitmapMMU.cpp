@@ -68,6 +68,9 @@ MemoryAllocatedItem **BitmapMMU::find_free_memory(void)
     {
         return freeMemoryList;
     }
+    freeMemoryList[cont] = firstFreeMemory;
+    cont++;
+
     while (true)
     {
         auto emptySpace = this->findNextFreeMemory();
@@ -86,7 +89,8 @@ MemoryAllocatedItem **BitmapMMU::find_free_memory(void)
 MemoryAllocatedItem *BitmapMMU::allocateInFreeSpace(MemoryAllocatedItem *memoryToAllocate, MemoryAllocatedItem *freeSpaceToAllocate)
 {
     auto startAddrBitmap = memoryToAllocate->getStartAddr() / this->minBlockSize;
-    for (int i = 0; i < memoryToAllocate->getSizeBytes() / this->minBlockSize; i++)
+    auto howManyToAllocate = memoryToAllocate->getSizeBytes() / this->minBlockSize + (memoryToAllocate->getSizeBytes() % this->minBlockSize != 0);
+    for (int i = 0; i < howManyToAllocate; i++)
     {
         this->bitmap[startAddrBitmap + i] = true;
     }
@@ -126,5 +130,8 @@ void BitmapMMU::setList(LinkedList<MemoryAllocatedItem> *list)
 
 void BitmapMMU::print(void)
 {
-    // TODO
+    for(int i = 0; i < this->memSize / this->minBlockSize; i++){
+        std::cout << this->bitmap[i];
+    }
+    std::cout << std::endl;
 }

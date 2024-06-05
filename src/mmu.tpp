@@ -46,6 +46,7 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
     MemoryAllocatedItem **mem_slot_list = allocationMap->find_free_memory();
     if(mem_slot_list == nullptr){
         // Empty list, no free space
+        std::cout << "Lista de livres vazia" << std::endl;
         return false;
     }
 
@@ -53,6 +54,7 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
     MemoryAllocatedItem *freeSpaceToAllocate = criterion.choose_slot(mem_slot_list,sizeToAllocate);
     if(freeSpaceToAllocate == nullptr){
         // No slot large enough
+        std::cout << "Nenhum slot escolhido" << std::endl;
         return false;
     }
     

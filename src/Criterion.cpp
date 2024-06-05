@@ -57,7 +57,6 @@ MemoryAllocatedItem * FirstFit::choose_slot(
 		)
 {
 	for(int i = 0; free_mem_list_head[i] != nullptr; i++){
-		std::cout << "(free_mem_list_head[i] == nullptr): " << (free_mem_list_head[i] == nullptr) << std::endl;
 		if(free_mem_list_head[i]->getSizeBytes() >= mem_size) return free_mem_list_head[i];
 	}
 	return nullptr;  // No available memory slot

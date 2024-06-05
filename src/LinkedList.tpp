@@ -141,7 +141,7 @@ Node<T> *LinkedList<T>::get_node(unsigned int index)
     unsigned int distCached = (cachedIndex > index)?cachedIndex-index:index-cachedIndex;
     
     // Tests if it should go up or down (first case is up)
-    if((2*index < this->size && index < distCached) || (index > distCached && cachedIndex < index)) 
+    if((2*index < this->size && index <= distCached) || (index > distCached && cachedIndex < index)) 
     {
         // Setup variables
         if(index <= distCached){
