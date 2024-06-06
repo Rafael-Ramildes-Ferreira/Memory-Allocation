@@ -12,7 +12,7 @@ bool LinkedList<T>::isEmpty(){
 
 template<typename T>
 void LinkedList<T>::addFirst(T *item){
-    Node<T> *newNode = new Node(item);
+    Node<T> *newNode = new Node<T>(item);
         
     if (isEmpty()) {
 			this->first = newNode;
@@ -35,7 +35,7 @@ void LinkedList<T>::insert(int index, T *item){
 	assert(!(index < 0 || index >= this->size));
         	
         
-    Node<T> *newNode = new Node(item);
+    Node<T> *newNode = new Node<T>(item);
     Node<T> *aux = this->get_node(index);
 
     if(aux == nullptr) {
