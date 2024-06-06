@@ -2,23 +2,24 @@
 #define __MMU_H
 
 #include "allocationMap.hpp"
+#include "Criterion.h"
 
-template<typename T>
+
 class MMU
 {
 private:
     unsigned int minBlock;
     AllocationMap *allocationMap;
-    T criterion;
+    Criterion *criterion;
 
 public:
-    MMU(unsigned int minBlock, AllocationMap *allocationMap);
+    MMU(unsigned int minBlock, AllocationMap *allocationMap, Criterion *criterion);
 
     unsigned int getMinBlock();
     AllocationMap *getAllocationMap();
 
     void setMinBlock(unsigned int minBlock);
-    void setAllocationMap(AllocationMap allocationMap);
+    void setAllocationMap(AllocationMap *allocationMap);
 
     bool allocate(unsigned int sizeBytes, unsigned int id);
     void deallocate(unsigned int id);
@@ -26,6 +27,5 @@ public:
     void printMemory();
 };
 
-#include "mmu.tpp"
 
 #endif

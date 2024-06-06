@@ -5,43 +5,35 @@
 #include <cassert>
 #include <iostream>
 
-template<typename T>
-MMU<T>::MMU(unsigned int minBlock, AllocationMap *allocationMap)
-{
-    // Tests if the chosen criterion has choose_slot method
-	static_assert(has_choose_slot<T>::value);
 
-    // TODO Verificar se o minBlock usa no método de LinkedList, pois não estou usando...
+MMU::MMU(unsigned int minBlock, AllocationMap *allocationMap, Criterion *criterion)
+{
     this->minBlock = minBlock;
     this->allocationMap = allocationMap;
+    this->criterion = criterion;
 }
 
-template<typename T>
-unsigned int MMU<T>::getMinBlock()
+unsigned int MMU::getMinBlock()
 {
     return this->minBlock;
 }
 
-template<typename T>
-AllocationMap *MMU<T>::getAllocationMap()
+AllocationMap *MMU::getAllocationMap()
 {
     return this->allocationMap;
 }
 
-template<typename T>
-void MMU<T>::setMinBlock(unsigned int minBlock)
+void MMU::setMinBlock(unsigned int minBlock)
 {
     this->minBlock = minBlock;
 }
 
-template<typename T>
-void MMU<T>::setAllocationMap(AllocationMap allocationMap)
+void MMU::setAllocationMap(AllocationMap *allocationMap)
 {
     this->allocationMap = allocationMap;
 }
 
-template<typename T>
-bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
+bool MMU::allocate(unsigned int sizeBytes, unsigned int id)
 {
     MemoryAllocatedItem **mem_slot_list = allocationMap->find_free_memory();
     if(mem_slot_list == nullptr){
@@ -51,7 +43,7 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
     }
 
     unsigned int sizeToAllocate = sizeBytes-sizeBytes%this->minBlock + (sizeBytes%this->minBlock!=0)*this->minBlock;
-    MemoryAllocatedItem *freeSpaceToAllocate = criterion.choose_slot(mem_slot_list,sizeToAllocate);
+    MemoryAllocatedItem *freeSpaceToAllocate = criterion->choose_slot(mem_slot_list,sizeToAllocate);
     if(freeSpaceToAllocate == nullptr){
         // No slot large enough
         std::cout << "Nenhum slot escolhido" << std::endl;
@@ -63,13 +55,11 @@ bool MMU<T>::allocate(unsigned int sizeBytes, unsigned int id)
     return true;
 }
 
-template<typename T>
-void MMU<T>::deallocate(unsigned int id)
+void MMU::deallocate(unsigned int id)
 {
     this->allocationMap->deallocate(id);
 }
 
-template<typename T>
-void MMU<T>::printMemory(){
+void MMU::printMemory(){
     allocationMap->print();
 }
