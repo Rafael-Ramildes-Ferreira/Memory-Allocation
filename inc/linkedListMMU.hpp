@@ -12,11 +12,11 @@ class LinkedListMMU : public AllocationMap
 {
 private:
     LinkedList<MemoryAllocatedItem> *list;
-
-	MemoryAllocatedItem *free_memory_list[MAXIMUM_FREE_SLOTS];
-
+    unsigned int memSize;
+    unsigned int minBlockSize;
+    
 public:
-    LinkedListMMU(unsigned int memSize);
+    LinkedListMMU(unsigned int memSize, unsigned int minBlockSize);
     LinkedListMMU(LinkedList<MemoryAllocatedItem> *list);
 
     MemoryAllocatedItem *findNextFreeMemory() override;

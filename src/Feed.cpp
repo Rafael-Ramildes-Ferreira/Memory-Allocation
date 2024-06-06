@@ -1,5 +1,6 @@
 #include "Feed.h"
 #include <fstream>
+#include <iostream>
 #include <cassert>
 #include "Criterion.h"
 #include "linkedListMMU.hpp"
@@ -39,7 +40,7 @@ void Feed::read()
 			memMap = (AllocationMap*) new BitmapMMU(mem_size,smallest_block);
 			break;
 		case LINKED_LIST:
-			memMap = (AllocationMap*) new LinkedListMMU(mem_size);
+			memMap = (AllocationMap*) new LinkedListMMU(mem_size,smallest_block);
 			break;
 		case MA_INVALID:
 			std::cout << "0 in first line of " << this->path << " is invalid" << std::endl;
