@@ -2,7 +2,6 @@
 #include "Node.h"
 #include "LinkedList.h"
 #include <cassert>
-#include <iostream>
 
 
 template<typename T>

@@ -1,5 +1,4 @@
 #include "Criterion.h"
-#include <iostream>
 
 
 /* Model Criterion class -----------------------------------------------------*/

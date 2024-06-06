@@ -1,5 +1,6 @@
 #include "Feed.h"
 #include <fstream>
+#include <iostream>
 #include <cassert>
 #include "Criterion.h"
 #include "linkedListMMU.hpp"
