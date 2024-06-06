@@ -9,7 +9,7 @@
 class Criterion
 {
 public:
-	static MemoryAllocatedItem * choose_slot(
+	virtual MemoryAllocatedItem * choose_slot(
 		MemoryAllocatedItem * free_mem_list_head[],
 		unsigned int mem_size
 		);
@@ -18,25 +18,25 @@ public:
 /**
  * @brief Best fit criterion implementation class
 */
-class BestFit
+class BestFit : public Criterion
 {
 public:
-	static MemoryAllocatedItem * choose_slot(
+	MemoryAllocatedItem * choose_slot(
 		MemoryAllocatedItem * free_mem_list_head[],
 		unsigned int mem_size
-		);
+		) override;
 };
 
 /**
  * @brief First fit criterion implementation class
 */
-class FirstFit
+class FirstFit : public Criterion
 {
 public:
-	static MemoryAllocatedItem * choose_slot(
+	MemoryAllocatedItem * choose_slot(
 		MemoryAllocatedItem * free_mem_list_head[],
 		unsigned int mem_size
-		);
+		) override;
 };
 
 

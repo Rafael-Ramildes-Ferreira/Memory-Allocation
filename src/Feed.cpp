@@ -47,82 +47,57 @@ void Feed::read()
 			std::cout << "Failed to initialize memory map" << std::endl;
 			return;
 	}
-	
+
+	Criterion *criterion;
 	switch (alloc_alg)
 	{
 	case BEST_FIT:
 		{
 			std::cout << "Best Fit:" << std::endl;
-			auto mmu = new MMU<BestFit>(smallest_block,memMap);
-
-			assert(mmu != nullptr);
-
-			// Read commands
-			char command;
-			unsigned int size, id;
-			while (file >> command)
-			{	
-				switch(command)
-				{
-					case 'A':
-						file >> size >> id;
-						std::cout << "A " << size << " " << id << std::endl;
-						mmu->allocate(size,id);
-						break;
-					case 'D':
-						file >> id;
-						std::cout << "D " << id << std::endl;
-						mmu->deallocate(id);
-						break;
-					default:
-						mmu->printMemory();
-						return;
-				}
-			}
-
-			std::cout << std::endl;
-			mmu->printMemory();
+			criterion = (Criterion*) new BestFit();
 		}
 		break;
 
 	case FIRST_FIT:
 		{
 			std::cout << "First Fit:" << std::endl;
-			auto mmu = new MMU<FirstFit>(smallest_block,memMap);
-
-			assert(mmu != nullptr);
-
-			// Read commands
-			char command;
-			unsigned int size, id;
-			while (file >> command)
-			{	
-				switch(command)
-				{
-					case 'A':
-						file >> size >> id;
-						std::cout << "A " << size << " " << id << std::endl;
-						mmu->allocate(size,id);
-						break;
-					case 'D':
-						file >> id;
-						std::cout << "D " << id << std::endl;
-						mmu->deallocate(id);
-						break;
-					default:
-						mmu->printMemory();
-						return;
-				}
-			}
-
-			std::cout << std::endl;
-			mmu->printMemory();
+			criterion = (Criterion*) new FirstFit();
 		}
 		break;
 	
 	default:
 		break;
 	}
+	
+	auto mmu = new MMU(smallest_block,memMap,criterion);
+
+	assert(mmu != nullptr);
+
+	// Read commands
+	char command;
+	unsigned int size, id;
+	while (file >> command)
+	{	
+		switch(command)
+		{
+			case 'A':
+				file >> size >> id;
+				std::cout << "A " << size << " " << id << std::endl;
+				mmu->allocate(size,id);
+				break;
+			case 'D':
+				file >> id;
+				std::cout << "D " << id << std::endl;
+				mmu->deallocate(id);
+				break;
+			default:
+				mmu->printMemory();
+				return;
+		}
+	}
+
+	std::cout << std::endl;
+	mmu->printMemory();
 }
 
 void Feed::print_info()
