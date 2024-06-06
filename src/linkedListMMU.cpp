@@ -3,6 +3,21 @@
 #include <functional>
 #include <iostream>
 
+
+LinkedListMMU::LinkedListMMU(unsigned int memSize, unsigned int minBlockSize)
+{
+    this->list = new LinkedList<MemoryAllocatedItem>;
+    MemoryAllocatedItem *emptyMemory = new MemoryAllocatedItem(0,false,0,memSize);
+    this->list->addFirst(emptyMemory);
+    this->memSize = memSize;
+    this->minBlockSize = minBlockSize;
+}
+
+LinkedListMMU::LinkedListMMU(LinkedList<MemoryAllocatedItem> *list)
+{
+    this->list = list;
+}
+
 MemoryAllocatedItem *LinkedListMMU::findNextFreeMemory()
 {
     unsigned int listSize = this->list->size;
@@ -85,18 +100,6 @@ MemoryAllocatedItem *LinkedListMMU::deallocate(unsigned int id)
     return nullptr;
 }
 
-LinkedListMMU::LinkedListMMU(unsigned int memSize)
-{
-    this->list = new LinkedList<MemoryAllocatedItem>;
-    MemoryAllocatedItem *emptyMemory = new MemoryAllocatedItem(0,false,0,memSize);
-    this->list->addFirst(emptyMemory);
-}
-
-LinkedListMMU::LinkedListMMU(LinkedList<MemoryAllocatedItem> *list)
-{
-    this->list = list;
-}
-
 LinkedList<MemoryAllocatedItem> *LinkedListMMU::getList()
 {
     return this->list;
@@ -109,20 +112,21 @@ void LinkedListMMU::setList(LinkedList<MemoryAllocatedItem> *list)
 
 MemoryAllocatedItem **LinkedListMMU::find_free_memory(void)
 {
-    // MemoryAllocatedItem *free_memory_list[MAXIMUM_FREE_SLOTS];
+	MemoryAllocatedItem **free_memory_list = new MemoryAllocatedItem*[this->memSize / this->minBlockSize / 2];
+
     unsigned int index = 0;
     for(int i = 0; i < this->list->size; i++)
     {
         MemoryAllocatedItem *mem_slot = this->list->get_item(i);
         if(mem_slot != nullptr){
             if(!mem_slot->getAllocatedMemory()){
-                this->free_memory_list[index] = mem_slot;
+                free_memory_list[index] = mem_slot;
                 index++;
             }
         }
     }
 
-    return this->free_memory_list;
+    return free_memory_list;
 }
 
 void LinkedListMMU::print(void)
